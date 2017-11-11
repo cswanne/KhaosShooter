@@ -98,5 +98,9 @@ public class GameController : MonoBehaviour {
         gameOver = true;
     }
 
-  
+    public void StopSpawnWaves()
+    {
+        StopCoroutine("SpawnWaves");
+        Debug.Log("SpawnWaves stopped");
+    }
 }

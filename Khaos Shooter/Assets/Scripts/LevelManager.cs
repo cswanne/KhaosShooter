@@ -13,21 +13,13 @@ public class LevelManager : MonoBehaviour
 
     private CanvasGroup transition;
 
+    public GameController gameController;
+   
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         Instance = this;
         LevelControl(SaveManager.Instance.state.currentLevelIndex);
-        
-    }
-
-    private void Start()
-    {
-        
-    }
-
-    public void Update()
-    {
         
     }
 
@@ -38,8 +30,8 @@ public class LevelManager : MonoBehaviour
 
         if (SaveManager.Instance.state.score == 100)
             {
-                LevelTransition();
-                UpdateLevelIndex(currentLevelIndex);
+                StartCoroutine (LevelTransition(currentLevelIndex));
+                //UpdateLevelIndex(currentLevelIndex);
                 //currentLevelIndex++;
                 //SaveManager.Instance.CompleteLevel(currentLevelIndex);
                 //SceneManager.LoadScene(SaveManager.Instance.state.currentLevelIndex);
@@ -62,10 +54,17 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(SaveManager.Instance.state.currentLevelIndex);
     }
 
-    public void LevelTransition()
+    IEnumerator LevelTransition(int currentLevelIndex)
     {
+        gameController.StopSpawnWaves();
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+            GameObject.Destroy(enemy);
+        yield return new WaitForSeconds(transitionWait); 
         Debug.Log("next level started");
         //transition.alpha = 1;
+        UpdateLevelIndex(currentLevelIndex);
 
     }
         
