@@ -29,13 +29,13 @@ public class PlayerController : MonoBehaviour {
         //Find this player's rigidbody component
         body = this.gameObject.GetComponent<Rigidbody>();
         //fireAudio1 = this.gameObject.GetComponent<AudioSource>();
-	}
+    }
 
     private void Update()
     {
         
 
-        if (Input.GetButton("AButton") && Time.time > nextFire)
+        if ((Input.GetButton("AButton") || Input.GetMouseButtonDown(0)) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
@@ -46,30 +46,20 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate ()
     {
-        
-        float moveHorizontal = Input.GetAxis("LeftThumbX");
-        float moveVertical = Input.GetAxis("LeftThumbY");
-        float boost = Input.GetAxis("RightTrigger");
+        float moveHorizontal = Input.GetAxis("LeftThumbX") + Input.GetAxis("MouseX"); 
+        float moveVertical = Input.GetAxis("LeftThumbY") + Input.GetAxis("MouseY");
+        float boost = Input.GetAxis("RightTrigger") + ((Input.GetMouseButtonDown(1)) ? 1 : 0);
                            
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
-                                     
+
         //This is a boost and brake function
         if (boost > 0)
-        {
             movement *= boostMovementSpeed;
-            body.velocity = movement;
-            
-        }
         else if(boost < 0)
-        {
             movement *= brakeMovementSpeed;
-            body.velocity = movement;
-        }
         else
-        {
             movement *= moveSpeed;
-            body.velocity = movement;            
-        }
+        body.velocity = movement;
 
         //Keeping the player within the contraints of the game panel
         body.position = new Vector3(Mathf.Clamp(body.position.x, boundary.xMin, boundary.xMax), Mathf.Clamp(body.position.y, boundary.yMin, boundary.yMax),0.0f);
