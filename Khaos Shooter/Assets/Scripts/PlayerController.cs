@@ -29,7 +29,13 @@ public class PlayerController : MonoBehaviour {
     Rigidbody body;
     //AudioSource fireAudio1;
 
-	void Start ()
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);  
+
+    }
+
+    void Start ()
     {
         //Find this player's rigidbody component
         body = this.gameObject.GetComponent<Rigidbody>();
