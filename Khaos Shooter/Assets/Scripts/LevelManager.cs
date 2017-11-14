@@ -23,10 +23,13 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        //transition = GameObject.Find("Transition").GetComponent<CanvasGroup>();
-        //transition.alpha = 0;
+        
     }
 
+    public void Update()
+    {
+        
+    }
 
     public void LevelControl(int currentLevelIndex)
     {
