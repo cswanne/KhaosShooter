@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.K))
         {
             keyboardControl = !keyboardControl;
-            Debug.Log(keyboardControl);
+            Debug.Log("Keyboard controls enabled = " + keyboardControl);
         }
 
         if (Input.GetButton("AButton") && Time.time > nextFire)

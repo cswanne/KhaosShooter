@@ -21,12 +21,15 @@ public class GameController : MonoBehaviour {
     private bool gameOver;
     private bool restart;
 
+    public bool spawn;
+
     public int currentLevelIndex;
 
     private void Start()
     {
         gameOver = false;
         restart = false;
+        spawn = true;
         //gameOverText.text = "";
         scoreText.text = ("Score: " + SaveManager.Instance.state.score.ToString());
         levelText.text = ("Level: " + (SaveManager.Instance.state.currentLevelIndex - 1));
@@ -47,15 +50,14 @@ public class GameController : MonoBehaviour {
                 SaveManager.Instance.Load();
             }
         }
-
-        
+       
     }
 
     IEnumerator SpawnWaves()
     {
         yield return new WaitForSeconds(startWait);
 
-        while (true)
+        while (spawn == true)
         {
             for (int i = 0; i < hazardCount; i++)
             {

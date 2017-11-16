@@ -876,7 +876,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionWait: 10
-  gameController: {fileID: 0}
 --- !u!4 &1883831038
 Transform:
   m_ObjectHideFlags: 0
