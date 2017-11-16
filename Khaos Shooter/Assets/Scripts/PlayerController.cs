@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
     public float fireRate = 0.25f;
     public Boundary boundary;
 
-    public bool keyboardControl;
+    public bool keyboardControl = false;
 
     Rigidbody body;
     //AudioSource fireAudio1;
@@ -61,23 +61,15 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate ()
     {
-<<<<<<< HEAD
         float moveHorizontal = Input.GetAxis("LeftThumbX") + Input.GetAxis("MouseX"); 
         float moveVertical = Input.GetAxis("LeftThumbY") + Input.GetAxis("MouseY");
         float boost = Input.GetAxis("RightTrigger") + ((Input.GetMouseButtonDown(1)) ? 1 : 0);
                            
-=======
 
-        if(keyboardControl == true)
-        {
+        if(keyboardControl == true) {
             keyboardControls();
-        
         }
 
-        float moveHorizontal = Input.GetAxis("LeftThumbX");
-        float moveVertical = Input.GetAxis("LeftThumbY");
-        float boost = Input.GetAxis("RightTrigger");
->>>>>>> acd5d26677d2bb1d0f6d06d844c5715e71f8033e
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
 
         //This is a boost and brake function
