@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour
 
     public void LevelTransition()
     {
-        
+        Debug.Log("next level started");
         //transition.alpha = 1;
 
     }
