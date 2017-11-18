@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
 
     public static LevelManager Instance { set; get; }
 
-    public float transitionWait = 1.0f;
+    public float transitionWait = 5.0f;
 
      
     private void Awake()
@@ -26,13 +26,13 @@ public class LevelManager : MonoBehaviour
         
         currentLevelIndex = SaveManager.Instance.state.currentLevelIndex;
 
-        if (SaveManager.Instance.state.score == 100)
+        if (SaveManager.Instance.state.score == 50)
             {
             
             StartCoroutine (LevelTransition(currentLevelIndex));
                 
             }
-        if (SaveManager.Instance.state.score == 200)
+        if (SaveManager.Instance.state.score == 100)
             {
                 StartCoroutine(LevelTransition(currentLevelIndex));
                 
@@ -40,13 +40,22 @@ public class LevelManager : MonoBehaviour
         
     }
 
-    
+    private CanvasGroup fader;
     
     IEnumerator LevelTransition(int currentLevelIndex)
     {
         //stop the asteroids spawning
         FindObjectOfType<GameController>().spawn = false;
-                      
+
+
+        //fade the transition proocess in
+
+        fader = FindObjectOfType<CanvasGroup>();
+        FindObjectOfType<Text>().text = ("Awesome! You've just finished level: " + (SaveManager.Instance.state.currentLevelIndex - 1) + " and your current score is: " + SaveManager.Instance.state.score).ToString();
+        fader.alpha = 0.9f;
+        
+        //end og transition process
+
         yield return new WaitForSeconds(transitionWait);
         Debug.Log("IENUMERATOR next level started");
         UpdateLevelIndex(currentLevelIndex);
