@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
 
     public static LevelManager Instance { set; get; }
 
-    public float transitionWait = 3;
+    public float transitionWait = 1.0f;
 
      
     private void Awake()
@@ -33,30 +33,35 @@ public class LevelManager : MonoBehaviour
             }
         if (SaveManager.Instance.state.score == 200)
             {
-                currentLevelIndex++;
-                SaveManager.Instance.CompleteLevel(currentLevelIndex);
-                SceneManager.LoadScene(SaveManager.Instance.state.currentLevelIndex);
+                StartCoroutine(LevelTransition(currentLevelIndex));
+                //currentLevelIndex++;
+                //SaveManager.Instance.CompleteLevel(currentLevelIndex);
+                //SceneManager.LoadScene(SaveManager.Instance.state.currentLevelIndex);
 
             }
         
     }
 
-    
+    private CanvasGroup fade;
+
     IEnumerator LevelTransition(int currentLevelIndex)
     {
-
+        //stop the asteroids spawning
         FindObjectOfType<GameController>().spawn = false;
         FindObjectOfType<GameController>().StopSpawnWaves();
-        
+
+        //destroy any current asteroids on screen      
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
             GameObject.Destroy(enemy);
-        //Time.timeScale = 0.2f;
-        yield return new WaitForSeconds(transitionWait); 
-        
+
+        fade = FindObjectOfType<CanvasGroup>();
+        fade.alpha = 1 + Time.deltaTime;
+        yield return new WaitForSeconds(transitionWait);
+
         Debug.Log("IENUMERATOR next level started");
         UpdateLevelIndex(currentLevelIndex);
-
+        
     }
 
     public void UpdateLevelIndex(int currentLevelIndex)
