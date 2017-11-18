@@ -35,10 +35,7 @@ public class LevelManager : MonoBehaviour
         if (SaveManager.Instance.state.score == 200)
             {
                 StartCoroutine(LevelTransition(currentLevelIndex));
-                //currentLevelIndex++;
-                //SaveManager.Instance.CompleteLevel(currentLevelIndex);
-                //SceneManager.LoadScene(SaveManager.Instance.state.currentLevelIndex);
-
+                
             }
         
     }
@@ -48,19 +45,9 @@ public class LevelManager : MonoBehaviour
     IEnumerator LevelTransition(int currentLevelIndex)
     {
         //stop the asteroids spawning
-
         FindObjectOfType<GameController>().spawn = false;
-        //FindObjectOfType<GameController>().enabled = false;
-        //FindObjectOfType<GameController>().StopSpawnWaves();
-
-        //destroy any current asteroids on screen      
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies)
-            GameObject.Destroy(enemy);
-
-        
+                      
         yield return new WaitForSeconds(transitionWait);
-        //FindObjectOfType<GameController>().spawn = true;
         Debug.Log("IENUMERATOR next level started");
         UpdateLevelIndex(currentLevelIndex);
         yield return null;

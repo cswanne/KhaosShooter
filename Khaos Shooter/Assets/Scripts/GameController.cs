@@ -51,14 +51,7 @@ public class GameController : MonoBehaviour {
             }
         }
 
-        //test - manual trigger to stop the asteroids spawning
-        if (Input.GetKey(KeyCode.G))
-        {
-            spawn = !spawn;
-        }
-
-        Debug.Log("Spawn status = " + spawn);
-
+        
         //Continuously kill all enemy game objects in the scene
         //this has been done becasue when spawn is set to false, it will not spawn a new wave but the exisiting wave of X amount (dependant on value set in the inspector) will still run
         if (spawn == false)
@@ -118,9 +111,4 @@ public class GameController : MonoBehaviour {
         gameOver = true;
     }
 
-    public void StopSpawnWaves()
-    {
-        StopCoroutine("SpawnWaves");
-        Debug.Log("SpawnWaves stopped");
-    }
-}
+ }
