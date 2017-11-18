@@ -148,6 +148,7 @@ MonoBehaviour:
   waveWait: 0.5
   scoreText: {fileID: 470279603}
   levelText: {fileID: 1232595776}
+  spawn: 0
   currentLevelIndex: 0
 --- !u!4 &2750858
 Transform:

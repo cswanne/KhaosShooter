@@ -1,0 +1,21 @@
+Game starts
+Loader does it's fade screen and loads the MainMenu scene
+SAVEMANAGER and LEVELMANAGER are dont desroy on load objects
+
+when the level starts:
+SHIP_LEVEL is loaded as dont destroy on load object
+
+Update function runs through the if statement
+
+if score = 100, the co routine is called
+
+The co routine... 
+	finds object of type GameController in the scene and sets Spawn to False
+	destroys all current objects in the scene
+	waits for the defined transiton wait value then...
+		calls the updateLevelIndex funciton
+
+the updateLevelFunction...
+	increments the currentLevelIndex
+	saves the new level index value to the save file
+	loads the next scene, by its level index

@@ -429,6 +429,7 @@ GameObject:
   - component: {fileID: 612543150}
   - component: {fileID: 612543149}
   - component: {fileID: 612543148}
+  - component: {fileID: 612543151}
   m_Layer: 5
   m_Name: Fade
   m_TagString: Untagged
@@ -499,6 +500,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 612543146}
+--- !u!114 &612543151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 612543146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb6dba3d9c49a24186bea6d416b102c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &810642982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,8 +1132,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hazard: {fileID: 1905022628922024, guid: c7fa4a097420eca47b678aab9f350751, type: 2}
   spawnValues: {x: 15, y: 7, z: 0}
-  hazardCount: 20
-  spawnWait: 1.01
+  hazardCount: 5
+  spawnWait: 0.8
   startWait: 1
   waveWait: 1.5
   scoreText: {fileID: 2079616174}
