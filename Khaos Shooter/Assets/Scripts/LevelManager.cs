@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { set; get; }
 
     public float transitionWait = 5.0f;
+    public bool transition = false;
 
      
     private void Awake()
@@ -40,6 +41,15 @@ public class LevelManager : MonoBehaviour
         
     }
 
+    public void Update()
+    {
+        if(transition == true)
+        {
+            StartCoroutine(FadeTo(1.0f, 1.0f));
+            transition = false; 
+        }
+    }
+
     private CanvasGroup fader;
     
     IEnumerator LevelTransition(int currentLevelIndex)
@@ -52,15 +62,28 @@ public class LevelManager : MonoBehaviour
 
         fader = FindObjectOfType<CanvasGroup>();
         FindObjectOfType<Text>().text = ("Awesome! You've just finished level: " + (SaveManager.Instance.state.currentLevelIndex - 1) + " and your current score is: " + SaveManager.Instance.state.score).ToString();
-        fader.alpha = 0.9f;
-        
-        //end og transition process
+        transition = true;
+             
+        //end of transition process
 
         yield return new WaitForSeconds(transitionWait);
         Debug.Log("IENUMERATOR next level started");
         UpdateLevelIndex(currentLevelIndex);
         yield return null;
         
+    }
+
+    IEnumerator FadeTo(float aValue, float aTime)
+    {
+        float alpha = fader.alpha;
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
+        {
+            fader.alpha = Mathf.Lerp(alpha, aValue, t);
+            yield return null;
+        }
+
+
+            
     }
 
     public void UpdateLevelIndex(int currentLevelIndex)
