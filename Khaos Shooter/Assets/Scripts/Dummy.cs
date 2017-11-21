@@ -13,7 +13,7 @@ public class Dummy : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (Input.GetButton("Start") || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButton("Start") || Input.GetKeyDown(KeyCode.S))
         {
             SceneManager.LoadScene("02_Level1");
         }

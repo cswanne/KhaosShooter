@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour {
         {
             SaveManager.Instance.ResetSave();
 
-            if (Input.GetButton("Start"))
+            if (Input.GetButton("Start") || Input.GetKeyDown(KeyCode.S))
             {
                 SceneManager.LoadScene(1);
                 SaveManager.Instance.Load();

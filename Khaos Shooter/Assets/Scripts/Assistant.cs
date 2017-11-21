@@ -6,6 +6,11 @@ public static class Assistant
 //the purpose of this assistant script is to handle tasks for me
 
 {
+
+    public static int currentFuel = 1000;
+    public static int currentAmmo = 100;
+
+
     //Serilise
     public static string Serialize<T>(this T toSerialize)
     {

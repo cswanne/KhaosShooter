@@ -12,8 +12,9 @@ public class LevelManager : MonoBehaviour
 
     public float transitionWait = 5.0f;
     public bool transition = false;
+    public int killsPerLevel = 50;
 
-     
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -27,13 +28,13 @@ public class LevelManager : MonoBehaviour
         
         currentLevelIndex = SaveManager.Instance.state.currentLevelIndex;
 
-        if (SaveManager.Instance.state.score == 50)
+        if (SaveManager.Instance.state.score == killsPerLevel)
             {
             
             StartCoroutine (LevelTransition(currentLevelIndex));
                 
             }
-        if (SaveManager.Instance.state.score == 100)
+        if (SaveManager.Instance.state.score == killsPerLevel*2)
             {
                 StartCoroutine(LevelTransition(currentLevelIndex));
                 

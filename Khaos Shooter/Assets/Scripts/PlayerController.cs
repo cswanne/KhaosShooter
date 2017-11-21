@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
     public Boundary boundary;
 
     public bool keyboardControl = false;
-
+    
     Rigidbody body;
     //AudioSource fireAudio1;
 
@@ -50,10 +50,12 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("Keyboard controls enabled = " + keyboardControl);
         }
 
-        if ((Input.GetButton("AButton") || Input.GetMouseButtonDown(0)) && Time.time > nextFire)
+        if ((Input.GetButton("AButton") || Input.GetKey(KeyCode.Space)) && Assistant.currentAmmo > 0 && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+            Assistant.currentAmmo--;
+            Debug.Log(string.Format("Ammo {0}", Assistant.currentAmmo));
             //fireAudio1.Play();
         }
         
@@ -61,24 +63,20 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate ()
     {
-        float moveHorizontal = Input.GetAxis("LeftThumbX") + Input.GetAxis("MouseX"); 
-        float moveVertical = Input.GetAxis("LeftThumbY") + Input.GetAxis("MouseY");
-        float boost = Input.GetAxis("RightTrigger") + ((Input.GetMouseButtonDown(1)) ? 1 : 0);
-                           
+        float moveHorizontal = Input.GetAxis("LeftThumbX"); 
+        float moveVertical = Input.GetAxis("LeftThumbY");
+        float boost = Input.GetAxis("RightTrigger");
 
-        if(keyboardControl == true) {
-            keyboardControls();
-        }
+        if (keyboardControl) {
+            keyboardControls(((keyboardControl && Input.GetKey(KeyCode.Z)) ? kbMoveSpeed * 2 : kbMoveSpeed));
+        };
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
 
         //This is a boost and brake function
-        if (boost > 0)
-            movement *= boostMovementSpeed;
-        else if(boost < 0)
-            movement *= brakeMovementSpeed;
-        else
-            movement *= moveSpeed;
+        if (boost > 0) movement *= boostMovementSpeed;
+        else if (boost < 0) movement *= brakeMovementSpeed;
+        else movement *= moveSpeed;
         body.velocity = movement;
 
         //Keeping the player within the contraints of the game panel
@@ -88,29 +86,25 @@ public class PlayerController : MonoBehaviour {
         //Dont want to tilt on x or y. Want the tilt on z to be relative to the speed we are moving at
         body.rotation = Quaternion.Euler(0.0f, 90.0f, body.velocity.y * tilt);
 
-	}
+        if (movement != Vector3.zero) {
+            Assistant.currentFuel--;
+            Debug.Log(string.Format("Fuel {0}", Assistant.currentFuel));
+        }
+
+    }
 
 
-    public void keyboardControls()
+    public void keyboardControls(float speed)
     {
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            body.AddForce(kbMoveSpeed, 0.0f, 0.0f, ForceMode.Force);
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            body.AddForce(-kbMoveSpeed, 0.0f, 0.0f, ForceMode.Force);
-        }
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            body.AddForce(0.0f, kbMoveSpeed, 0.0f, ForceMode.Force);
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            body.AddForce(0.0f,  -kbMoveSpeed, 0.0f, ForceMode.Force);
-        }
-
+        float x = 0f, y = 0f;
+        if (Input.GetKey(KeyCode.RightArrow)) x = speed;
+        else if (Input.GetKey(KeyCode.LeftArrow)) x = -speed;
+        else if (Input.GetKey(KeyCode.UpArrow)) y = speed;
+        else if (Input.GetKey(KeyCode.DownArrow)) y = -speed;
+        body.AddForce(x, y, 0f, ForceMode.Force);
+        if (x + y != 0) {
+            Assistant.currentFuel--;
+            Debug.Log(string.Format("Fuel {0}", Assistant.currentFuel));
+        };
     }
 }
