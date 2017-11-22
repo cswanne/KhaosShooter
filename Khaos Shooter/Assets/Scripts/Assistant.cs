@@ -9,6 +9,7 @@ public static class Assistant
 
     public static int currentFuel = 1000;
     public static int currentAmmo = 100;
+    public static float canisterDestroyTime = 0f;
 
 
     //Serilise

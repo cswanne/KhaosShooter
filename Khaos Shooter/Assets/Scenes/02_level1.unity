@@ -1072,6 +1072,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0554c44b0d72a543bf87c73385e46ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fuelCanister: {fileID: 4006488243540258, guid: 07f6c816c966332449fec035320e455c,
+    type: 2}
 --- !u!1 &1906752850
 GameObject:
   m_ObjectHideFlags: 0
