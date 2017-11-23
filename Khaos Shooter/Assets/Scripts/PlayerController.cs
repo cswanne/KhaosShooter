@@ -19,10 +19,12 @@ public class PlayerController : MonoBehaviour {
    
 
     public GameObject shot;
+    public GameObject explosion;
     public Transform shotSpawn;
     private float nextFire = 0.5f;
     public float fireRate = 0.25f;
     public Boundary boundary;
+    private GameController gameController;
 
     public bool keyboardControl = false;
     
@@ -40,6 +42,11 @@ public class PlayerController : MonoBehaviour {
         //Find this player's rigidbody component
         body = this.gameObject.GetComponent<Rigidbody>();
         //fireAudio1 = this.gameObject.GetComponent<AudioSource>();
+
+        GameObject gameControllerObject = GameObject.FindGameObjectWithTag("GameController");
+        if (gameControllerObject != null) {
+            gameController = gameControllerObject.GetComponent<GameController>();
+        }
     }
 
     private void Update()
@@ -55,7 +62,6 @@ public class PlayerController : MonoBehaviour {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
             Assistant.currentAmmo--;
-            Debug.Log(string.Format("Ammo {0}", Assistant.currentAmmo));
             //fireAudio1.Play();
         }
         
@@ -88,7 +94,6 @@ public class PlayerController : MonoBehaviour {
 
         if (movement != Vector3.zero) {
             Assistant.currentFuel--;
-            Debug.Log(string.Format("Fuel {0}", Assistant.currentFuel));
         }
 
     }
@@ -98,13 +103,22 @@ public class PlayerController : MonoBehaviour {
     {
         float x = 0f, y = 0f;
         if (Input.GetKey(KeyCode.RightArrow)) x = speed;
-        else if (Input.GetKey(KeyCode.LeftArrow)) x = -speed;
-        else if (Input.GetKey(KeyCode.UpArrow)) y = speed;
-        else if (Input.GetKey(KeyCode.DownArrow)) y = -speed;
+        if (Input.GetKey(KeyCode.LeftArrow)) x = -speed;
+        if (Input.GetKey(KeyCode.UpArrow)) y = speed;
+        if (Input.GetKey(KeyCode.DownArrow)) y = -speed;
         body.AddForce(x, y, 0f, ForceMode.Force);
         if (x + y != 0) {
             Assistant.currentFuel--;
-            Debug.Log(string.Format("Fuel {0}", Assistant.currentFuel));
+            //Debug.Log(string.Format("Fuel {0}", Assistant.currentFuel));
         };
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.transform.tag == "Enemy") {
+            Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
+            Destroy(gameObject);
+            gameController.GameOver();
+        }
     }
 }

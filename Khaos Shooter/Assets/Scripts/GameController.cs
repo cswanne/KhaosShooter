@@ -18,7 +18,6 @@ public class GameController : MonoBehaviour {
     
     //public Text gameOverText;
     //public Text restartText;
-    private bool gameOver;
     private bool restart;
 
     public bool spawn;
@@ -27,7 +26,6 @@ public class GameController : MonoBehaviour {
 
     private void Start()
     {
-        gameOver = false;
         restart = false;
         spawn = true;
         //gameOverText.text = "";
@@ -54,13 +52,20 @@ public class GameController : MonoBehaviour {
         
         //Continuously kill all enemy game objects in the scene
         //this has been done becasue when spawn is set to false, it will not spawn a new wave but the exisiting wave of X amount (dependant on value set in the inspector) will still run
-        if (spawn == false)
-        {
+        if (spawn == false || Assistant.gameOver == true) {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject enemy in enemies)
-                GameObject.Destroy(enemy);
+            foreach (GameObject obj in enemies)
+                GameObject.Destroy(obj);
+            GameObject[] misc = GameObject.FindGameObjectsWithTag("MiscObjects");
+            foreach (GameObject obj in misc)
+                GameObject.Destroy(obj);
+            restart = true;
+            spawn = false;
         }
-       
+
+        //temp
+        //scoreText.text = string.Format("Ammo {0}", Assistant.currentAmmo);
+        //levelText.text = string.Format("Fuel {0}", Assistant.currentFuel);
     }
 
     IEnumerator SpawnWaves()
@@ -71,25 +76,13 @@ public class GameController : MonoBehaviour {
         {
             for (int i = 0; i < hazardCount; i++)
             {
+                if (!spawn) continue;
                 Vector3 spawnPosition = new Vector3(spawnValues.x, Random.Range(-spawnValues.y, spawnValues.y), spawnValues.z);
                 Quaternion spawnRotation = Quaternion.identity;
                 Instantiate(hazard, spawnPosition, spawnRotation);
                 yield return new WaitForSeconds(spawnWait);
             }
             yield return new WaitForSeconds(waveWait);
-
-            if (gameOver)
-            {
-                //maybe break out into a menu?
-                //restartText.text = "Press Start to try again";
-                //Destroy all game objects
-                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-                foreach (GameObject enemy in enemies)
-                    GameObject.Destroy(enemy);
-                restart = true;
-                break;
-            }
-                        
         }
     }
 
@@ -108,7 +101,7 @@ public class GameController : MonoBehaviour {
     public void GameOver()
     {
         //gameOverText.text = "Game Over!";
-        gameOver = true;
+        Assistant.gameOver = true;
     }
 
  }

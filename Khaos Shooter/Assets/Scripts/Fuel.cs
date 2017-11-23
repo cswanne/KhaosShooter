@@ -5,8 +5,7 @@ using UnityEngine;
 public class Fuel : MonoBehaviour {
 
     public Transform explosion;
-    private Transform clone;
-
+    
 	void Update () {
         transform.Rotate(0, 10 * Time.deltaTime, 10 * Time.deltaTime);
     }
@@ -14,7 +13,7 @@ public class Fuel : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.transform.tag == "Enemy") {
-            clone = Instantiate(explosion, transform.position, transform.rotation) as Transform;
+            Instantiate(explosion, transform.position, transform.rotation);
             Destroy(gameObject);
             Assistant.canisterDestroyTime = Time.time;
         } else if (collision.collider.transform.tag == "Player") {

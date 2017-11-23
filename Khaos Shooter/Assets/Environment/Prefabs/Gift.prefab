@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 95703452502800390}
   m_Layer: 0
   m_Name: Gift
-  m_TagString: Untagged
+  m_TagString: MiscObjects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
