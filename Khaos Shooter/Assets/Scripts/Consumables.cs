@@ -12,7 +12,7 @@ public class Consumables : MonoBehaviour
     private void NewCanister()
     {
         if (clone == null) {
-            Vector3 pos = new Vector3(0, 0, 0);
+            Vector3 pos = new Vector3(Random.Range(-15, 15), Random.Range(-7, 7), 0);
             GameObject asteriod = FindClosestAsteriod(pos.y);
             if (asteriod != null && asteriod.transform.position.x > pos.x && asteriod.transform.position.x < pos.x + 100) {
                 Assistant.canisterDestroyTime = Time.time;
