@@ -15,7 +15,9 @@ public class GameController : MonoBehaviour {
 
     public Text scoreText;
     public Text levelText;
-    
+    public Slider fuelSlider;
+    public Slider ammoSlider;
+
     //public Text gameOverText;
     //public Text restartText;
     private bool restart;
@@ -63,9 +65,8 @@ public class GameController : MonoBehaviour {
             spawn = false;
         }
 
-        //temp
-        //scoreText.text = string.Format("Ammo {0}", Assistant.currentAmmo);
-        //levelText.text = string.Format("Fuel {0}", Assistant.currentFuel);
+        fuelSlider.value = Mathf.Clamp01(Assistant.currentFuel / 1000f);
+        ammoSlider.value = Mathf.Clamp01(Assistant.currentAmmo / 100f);
     }
 
     IEnumerator SpawnWaves()
