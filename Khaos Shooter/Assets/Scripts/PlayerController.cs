@@ -72,9 +72,11 @@ public class PlayerController : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("LeftThumbX"); 
         float moveVertical = Input.GetAxis("LeftThumbY");
         float boost = Input.GetAxis("RightTrigger");
+        float noFuel = 1f;
 
+        if (Assistant.currentFuel == 0) noFuel = 0.25f;
         if (keyboardControl) {
-            keyboardControls(((keyboardControl && Input.GetKey(KeyCode.Z)) ? kbMoveSpeed * 2 : kbMoveSpeed));
+            keyboardControls(((keyboardControl && Input.GetKey(KeyCode.Z)) ? kbMoveSpeed * 2 * noFuel : kbMoveSpeed * noFuel));
         };
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
@@ -83,7 +85,7 @@ public class PlayerController : MonoBehaviour {
         if (boost > 0) movement *= boostMovementSpeed;
         else if (boost < 0) movement *= brakeMovementSpeed;
         else movement *= moveSpeed;
-        body.velocity = movement;
+        body.velocity = movement * noFuel;
 
         //Keeping the player within the contraints of the game panel
         body.position = new Vector3(Mathf.Clamp(body.position.x, boundary.xMin, boundary.xMax), Mathf.Clamp(body.position.y, boundary.yMin, boundary.yMax),0.0f);
@@ -93,7 +95,7 @@ public class PlayerController : MonoBehaviour {
         body.rotation = Quaternion.Euler(0.0f, 90.0f, body.velocity.y * tilt);
 
         if (movement != Vector3.zero) {
-            Assistant.currentFuel--;
+            Assistant.updateFuel(-1);
         }
 
     }
@@ -108,8 +110,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey(KeyCode.DownArrow)) y = -speed;
         body.AddForce(x, y, 0f, ForceMode.Force);
         if (x + y != 0) {
-            Assistant.currentFuel--;
-            //Debug.Log(string.Format("Fuel {0}", Assistant.currentFuel));
+            Assistant.updateFuel(-1);
         };
     }
 

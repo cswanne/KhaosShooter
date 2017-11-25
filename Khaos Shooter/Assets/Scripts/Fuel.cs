@@ -17,7 +17,7 @@ public class Fuel : MonoBehaviour {
             Destroy(gameObject);
             Assistant.canisterDestroyTime = Time.time;
         } else if (collision.collider.transform.tag == "Player") {
-            Assistant.currentFuel = 1000;
+            Assistant.updateFuel(250);
             Destroy(gameObject);
             Assistant.canisterDestroyTime = Time.time;
         }
