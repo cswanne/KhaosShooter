@@ -18,6 +18,9 @@ public class GameController : MonoBehaviour {
     public Slider fuelSlider;
     public Slider ammoSlider;
 
+    private Text fuelSliderText;
+    private Text ammoSliderText;
+
     //public Text gameOverText;
     //public Text restartText;
     private bool restart;
@@ -36,6 +39,8 @@ public class GameController : MonoBehaviour {
         currentLevelIndex = SaveManager.Instance.state.currentLevelIndex;
         StartCoroutine (SpawnWaves());
         Debug.Log("Current level index = " + SaveManager.Instance.state.currentLevelIndex);
+        fuelSliderText = fuelSlider.GetComponentInChildren<Text>();
+        ammoSliderText = ammoSlider.GetComponentInChildren<Text>();
     }
 
     private void Update()
@@ -66,7 +71,9 @@ public class GameController : MonoBehaviour {
         }
 
         fuelSlider.value = Mathf.Clamp01(Assistant.currentFuel / 1000f);
-        ammoSlider.value = Mathf.Clamp01(Assistant.currentAmmo / 100f);
+        ammoSlider.value = Mathf.Clamp01(Assistant.currentAmmo / 50f);
+        fuelSliderText.text = string.Format("{0:0}%", fuelSlider.value * 100f);
+        ammoSliderText.text = string.Format("{0:0}%", ammoSlider.value * 100f);
     }
 
     IEnumerator SpawnWaves()

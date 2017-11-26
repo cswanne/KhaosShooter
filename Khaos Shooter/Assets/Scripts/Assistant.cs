@@ -8,15 +8,22 @@ public static class Assistant
 
     public static bool gameOver = false;
     public static int currentFuel = 1000;
-    public static int currentAmmo = 100;
+    public static int currentAmmo = 50;
     public static float canisterDestroyTime = 0f;
 
     public static void updateFuel(int value)
     {
         currentFuel += value;
         if (currentFuel < 0) currentFuel = 0;
+        else if (currentFuel > 1000) currentFuel = 1000;
     }
 
+    public static void updateAmmo(int value)
+    {
+        currentAmmo += value;
+        if (currentAmmo < 0) currentAmmo = 0;
+        else if (currentAmmo > 50) currentAmmo = 50;
+    }
 
     //Serilise
     public static string Serialize<T>(this T toSerialize)

@@ -6,21 +6,39 @@ public class Consumables : MonoBehaviour
 {
 
     public Transform fuelCanister;
-    private Transform clone = null;
+    public Transform ammoBox;
+    private Transform fuelClone = null;
+    private Transform ammoClone = null;
     private int nextCanisterSeconds = 4;
+
+    private bool CantCreate(Vector3 pos)
+    {
+        GameObject asteriod = FindClosestAsteriod(pos.y);
+        return (asteriod != null && asteriod.transform.position.x > pos.x && asteriod.transform.position.x < pos.x + 100);
+    }
 
     private void NewCanister()
     {
-        if (clone == null) {
+
+        if (fuelClone == null) {
             Vector3 pos = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
             //Based on random postion, try not to appear directly in front of ansteriod
-            GameObject asteriod = FindClosestAsteriod(pos.y);
-            if (asteriod != null && asteriod.transform.position.x > pos.x && asteriod.transform.position.x < pos.x + 100) {
+            if (CantCreate(pos)) {
                 Assistant.canisterDestroyTime = Time.time;
                 return;
             }
             Quaternion rot = Quaternion.Euler(new Vector3(90, 0, 0));
-            clone = Instantiate(fuelCanister, pos, rot) as Transform;
+            fuelClone = Instantiate(fuelCanister, pos, rot) as Transform;
+        }
+        if (ammoClone == null) {
+            Vector3 pos = new Vector3(Random.Range(-10, 10), Random.Range(-6, 6), 0);
+            //Based on random postion, try not to appear directly in front of ansteriod
+            if (CantCreate(pos)) { 
+                Assistant.canisterDestroyTime = Time.time;
+                return;
+            }
+            Quaternion rot = Quaternion.Euler(new Vector3(90, 0, 0));
+            ammoClone = Instantiate(ammoBox, pos, rot) as Transform;
         }
     }
 
