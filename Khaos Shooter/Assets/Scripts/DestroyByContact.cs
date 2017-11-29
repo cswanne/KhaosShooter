@@ -6,7 +6,8 @@ public class DestroyByContact : MonoBehaviour {
 
     public GameObject explosion;
     public int scoreValue;
-    private GameController gameController;
+    //public int boulderHitCount = 0;
+    private GameController gameController = null;
     private float scale = 0.3f;
 
     private void Start()
@@ -22,22 +23,27 @@ public class DestroyByContact : MonoBehaviour {
         }
     }
 
+    private void Fragment(GameObject asteriod)
+    {
+        Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(asteriod);
+        for (var i = 0; i < 6; i++) {
+            GameObject clone = Instantiate(asteriod, transform.position, transform.rotation, transform.parent);
+            clone.tag = "Boulder";
+            clone.transform.localScale = new Vector3(transform.localScale.x * scale, transform.localScale.y * scale, transform.localScale.z * scale);
+            Rigidbody rb = clone.GetComponent<Rigidbody>();
+            rb.AddForce(new Vector3(Random.Range(-(i * 10), (i * 10)), Random.Range(-(i * 10), (i * 10)), 0), ForceMode.Acceleration);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.transform.tag == "Enemy" && this.tag != "Boulder") {
-            Instantiate(explosion, transform.position, transform.rotation);
-            GameObject self = transform.gameObject;
-            Destroy(self);
-            for (var i = 0; i < 4; i++) {
-                GameObject clone = Instantiate(self, transform.position, transform.rotation, transform.parent);
-                clone.tag = "Boulder";
-                CapsuleCollider cc = clone.GetComponent<CapsuleCollider>();
-                //cc.enabled = false;
-                clone.transform.localScale = new Vector3(transform.localScale.x * scale, transform.localScale.y * scale, transform.localScale.z * scale);
-                Rigidbody rb = clone.GetComponent<Rigidbody>();
-                rb.AddForce(new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), 0));
-            }
-        } else if (collision.collider.transform.tag != "Boulder" && this.tag == "Boulder") {
+        if (collision.collider.transform.tag == "Enemy" && this.tag == "Enemy") { //two asteriods
+            Fragment(transform.gameObject);
+        } else if (collision.collider.transform.tag == "Boulder" && this.tag == "Enemy") { //boulder hitting asteriod
+            Fragment(transform.gameObject);
+        } else if (collision.collider.transform.tag == "Boulder" && this.tag == "Boulder") { //do nothing
+        } else if (collision.collider.transform.tag != "Boulder" && this.tag == "Boulder") { //anything else
             Destroy(transform.gameObject);
         }
     }
@@ -50,7 +56,8 @@ public class DestroyByContact : MonoBehaviour {
         }
 
         Instantiate(explosion, transform.position, transform.rotation);
-        gameController.AddScore(scoreValue);
+        if (gameController != null)
+            gameController.AddScore(scoreValue);
         Destroy(other.gameObject); //asteriod
         Destroy(this.gameObject); //bullet
     }
