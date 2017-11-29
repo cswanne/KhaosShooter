@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Transition
   - MiscObjects
+  - Boulder
   layers:
   - Default
   - TransparentFX

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.004074374, g: 0.00022282025, b: 0.000000056532844,
+  m_IndirectSpecularColor: {r: 0.0040743686, g: 0.0002228199, b: 0.000000056532844,
     a: 1}
 --- !u!157 &3
 LightmapSettings:
@@ -195,7 +195,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 15586944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 512, y: 384, z: 0}
+  m_LocalPosition: {x: 425, y: 265.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2003397076}
@@ -231,7 +231,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 212318342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 62, y: -89.5, z: 0}
+  m_LocalPosition: {x: 149, y: -89.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1563916437}
@@ -471,7 +471,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 533894585}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -155, y: -92, z: 0}
+  m_LocalPosition: {x: -242, y: -92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 589360636}
@@ -951,8 +951,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 860693619}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 512, y: 384, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalPosition: {x: 425, y: 265.5, z: 0}
+  m_LocalScale: {x: 0.6640625, y: 0.6640625, z: 0.6640625}
   m_Children:
   - {fileID: 612543147}
   m_Father: {fileID: 0}
@@ -1109,7 +1109,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1423615203}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 384, z: 0}
+  m_LocalPosition: {x: 0, y: 265.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 365165701}
@@ -1640,7 +1640,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88897ae870973384c9662c8c76bf0b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hazard: {fileID: 1905022628922024, guid: c7fa4a097420eca47b678aab9f350751, type: 2}
+  hazards:
+  - {fileID: 1905022628922024, guid: c7fa4a097420eca47b678aab9f350751, type: 2}
+  - {fileID: 1180077708309426, guid: 78f1aac0f3aa6594090d78543165d5aa, type: 2}
+  - {fileID: 1294962950139000, guid: cd47afef3642dc8409cb3d86f5b172b2, type: 2}
   spawnValues: {x: 15, y: 7, z: 0}
   hazardCount: 5
   spawnWait: 0.8
@@ -1917,7 +1920,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2079616172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -492, y: -47.5, z: 0}
+  m_LocalPosition: {x: -405, y: -47.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1423615204}
@@ -1991,7 +1994,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2116790124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 437, y: -47.5, z: 0}
+  m_LocalPosition: {x: 350, y: -47.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1423615204}

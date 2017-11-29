@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4432241073659848}
   - component: {fileID: 33035844737379264}
   - component: {fileID: 23963743863693120}
-  - component: {fileID: 114058987132901906}
   - component: {fileID: 54647917501506468}
   - component: {fileID: 136171222964804474}
+  - component: {fileID: 114058987132901906}
   - component: {fileID: 114641032823123260}
   - component: {fileID: 114093008738877164}
   m_Layer: 0
@@ -55,6 +55,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -70,6 +71,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -125,7 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 100004, guid: 2857e183f4cd3df4e9096e5b578bd32f, type: 2}
-  playerExplosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
   scoreValue: 10
 --- !u!114 &114641032823123260
 MonoBehaviour:

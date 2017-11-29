@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
-    public GameObject hazard;
+//    public GameObject hazard;
+    public GameObject[] hazards;
     public Vector3 spawnValues;
     public int hazardCount;
     public float spawnWait;
@@ -25,7 +26,7 @@ public class GameController : MonoBehaviour {
     //public Text restartText;
     private bool restart;
 
-    public bool spawn;
+    public bool spawn; //todo: remove. at the mo level tranistion uses it
 
     public int currentLevelIndex;
 
@@ -57,8 +58,7 @@ public class GameController : MonoBehaviour {
         }
 
         
-        //Continuously kill all enemy game objects in the scene
-        //this has been done becasue when spawn is set to false, it will not spawn a new wave but the exisiting wave of X amount (dependant on value set in the inspector) will still run
+        //Free game objects on game over
         if (spawn == false || Assistant.gameOver == true) {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject obj in enemies)
@@ -70,6 +70,7 @@ public class GameController : MonoBehaviour {
             spawn = false;
         }
 
+        //Update consumable values
         fuelSlider.value = Mathf.Clamp01(Assistant.currentFuel / 1000f);
         ammoSlider.value = Mathf.Clamp01(Assistant.currentAmmo / 50f);
         fuelSliderText.text = string.Format("{0:0}%", fuelSlider.value * 100f);
@@ -80,6 +81,9 @@ public class GameController : MonoBehaviour {
     {
         yield return new WaitForSeconds(startWait);
 
+
+        GameObject hazard;
+
         while (spawn == true)
         {
             for (int i = 0; i < hazardCount; i++)
@@ -87,6 +91,7 @@ public class GameController : MonoBehaviour {
                 if (!spawn) continue;
                 Vector3 spawnPosition = new Vector3(spawnValues.x, Random.Range(-spawnValues.y, spawnValues.y), spawnValues.z);
                 Quaternion spawnRotation = Quaternion.identity;
+                hazard = hazards[Mathf.RoundToInt(Random.Range(0, 3))];
                 Instantiate(hazard, spawnPosition, spawnRotation);
                 yield return new WaitForSeconds(spawnWait);
             }

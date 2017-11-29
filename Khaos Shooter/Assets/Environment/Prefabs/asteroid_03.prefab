@@ -21,14 +21,14 @@ GameObject:
   - component: {fileID: 4662402801723180}
   - component: {fileID: 33403763043161382}
   - component: {fileID: 23942526006555980}
-  - component: {fileID: 114630761780325788}
   - component: {fileID: 54728135206009458}
   - component: {fileID: 136767775253777284}
+  - component: {fileID: 114630761780325788}
   - component: {fileID: 114881939010099488}
   - component: {fileID: 114625661985170902}
   m_Layer: 0
   m_Name: asteroid_03
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,6 +55,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -70,6 +71,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -112,7 +114,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 100004, guid: 2857e183f4cd3df4e9096e5b578bd32f, type: 2}
-  playerExplosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
   scoreValue: 10
 --- !u!114 &114630761780325788
 MonoBehaviour:
