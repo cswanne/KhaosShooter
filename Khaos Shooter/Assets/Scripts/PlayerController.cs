@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject shot;
     public GameObject explosion;
+    public GameObject shield;
     public Transform shotSpawn;
     private float nextFire = 0.5f;
     public float fireRate = 0.25f;
@@ -120,6 +121,10 @@ public class PlayerController : MonoBehaviour {
             Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
             Destroy(gameObject);
             gameController.GameOver();
+        } else if (collision.collider.transform.tag == "Boulder") {
+            Quaternion rot = Quaternion.Euler(new Vector3(0, 0, 86.33f));
+            GameObject clone = Instantiate(shield, transform.position, rot);
+            clone.transform.parent = transform;
         }
     }
 }
