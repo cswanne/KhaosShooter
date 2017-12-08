@@ -433,7 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTurnSpeed: 110
   maxMoveSpeed: 10
-  jumpForce: 50
+  jumpForce: 200
   maxStrafeSpeed: 20
 --- !u!54 &1267204810
 Rigidbody:
