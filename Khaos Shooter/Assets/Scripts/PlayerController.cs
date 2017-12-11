@@ -52,14 +52,12 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
+        if (Input.GetKeyDown(KeyCode.K))  {
             keyboardControl = !keyboardControl;
             Debug.Log("Keyboard controls enabled = " + keyboardControl);
         }
 
-        if ((Input.GetButton("AButton") || Input.GetKey(KeyCode.Space)) && Assistant.currentAmmo > 0 && Time.time > nextFire)
-        {
+        if ((Input.GetButton("AButton") || Input.GetKey(KeyCode.Space)) && Assistant.currentAmmo > 0 && Time.time > nextFire)  {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
             Assistant.currentAmmo--;
@@ -77,7 +75,7 @@ public class PlayerController : MonoBehaviour {
 
         if (Assistant.currentFuel == 0) noFuel = 0.25f;
         if (keyboardControl) {
-            keyboardControls(((keyboardControl && Input.GetKey(KeyCode.Z)) ? kbMoveSpeed * 2 * noFuel : kbMoveSpeed * noFuel));
+            keyboardControls(Input.GetKey(KeyCode.Z), noFuel);
         };
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
@@ -96,14 +94,15 @@ public class PlayerController : MonoBehaviour {
         body.rotation = Quaternion.Euler(0.0f, 90.0f, body.velocity.y * tilt);
 
         if (movement != Vector3.zero) {
-            Assistant.updateFuel(-1);
+            Assistant.updateFuel((boost > 0) ? -2 : -1);
         }
 
     }
 
 
-    public void keyboardControls(float speed)
+    public void keyboardControls(bool boost, float noFuel)
     {
+        float speed = (boost) ? kbMoveSpeed * 2 * noFuel : kbMoveSpeed * noFuel;
         float x = 0f, y = 0f;
         if (Input.GetKey(KeyCode.RightArrow)) x = speed;
         if (Input.GetKey(KeyCode.LeftArrow)) x = -speed;
@@ -111,7 +110,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey(KeyCode.DownArrow)) y = -speed;
         body.AddForce(x, y, 0f, ForceMode.Force);
         if (x + y != 0) {
-            Assistant.updateFuel(-1);
+            Assistant.updateFuel((boost) ? -2 : -1);
         };
     }
 
