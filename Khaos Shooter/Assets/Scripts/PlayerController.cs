@@ -10,7 +10,12 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour {
 
-    
+    private float moveHorizontal = 0;
+    private float moveVertical = 0;
+    private float boost = 0;
+    private float noFuel = 0;
+    private float x = 0f, y = 0f;
+
     public float moveSpeed = 10.0f;
     public float kbMoveSpeed = 300.0f;
     private float boostMovementSpeed = 20f;
@@ -34,8 +39,8 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);  
-
+        DontDestroyOnLoad(gameObject);
+        keyboardControl = true;
     }
 
     void Start ()
@@ -52,50 +57,63 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))  {
+        /*if (Input.GetKeyDown(KeyCode.K))  {
             keyboardControl = !keyboardControl;
             Debug.Log("Keyboard controls enabled = " + keyboardControl);
-        }
+        }*/
 
         if ((Input.GetButton("AButton") || Input.GetKey(KeyCode.Space)) && Assistant.currentAmmo > 0 && Time.time > nextFire)  {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
             Assistant.currentAmmo--;
             //fireAudio1.Play();
-        }
-        
-    }
+        };
 
-    void FixedUpdate ()
-    {
-        float moveHorizontal = Input.GetAxis("LeftThumbX"); 
-        float moveVertical = Input.GetAxis("LeftThumbY");
-        float boost = Input.GetAxis("RightTrigger");
-        float noFuel = 1f;
+        moveHorizontal = Input.GetAxis("LeftThumbX");
+        moveVertical = Input.GetAxis("LeftThumbY");
+        boost = Input.GetAxis("RightTrigger");
+        noFuel = 1f;
 
         if (Assistant.currentFuel == 0) noFuel = 0.25f;
         if (keyboardControl) {
             keyboardControls(Input.GetKey(KeyCode.Z), noFuel);
         };
 
-        Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
+    }
 
-        //This is a boost and brake function
-        if (boost > 0) movement *= boostMovementSpeed;
-        else if (boost < 0) movement *= brakeMovementSpeed;
-        else movement *= moveSpeed;
-        body.velocity = movement * noFuel;
+    void FixedUpdate ()
+    {
 
-        //Keeping the player within the contraints of the game panel
-        body.position = new Vector3(Mathf.Clamp(body.position.x, boundary.xMin, boundary.xMax), Mathf.Clamp(body.position.y, boundary.yMin, boundary.yMax),0.0f);
+        /*
+                Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
 
-        //Add some bank to the ship as it moves left and right
-        //Dont want to tilt on x or y. Want the tilt on z to be relative to the speed we are moving at
-        body.rotation = Quaternion.Euler(0.0f, 90.0f, body.velocity.y * tilt);
+                //This is a boost and brake function
+                if (boost > 0) movement *= boostMovementSpeed;
+                else if (boost < 0) movement *= brakeMovementSpeed;
+                else movement *= moveSpeed;
+                body.velocity = movement * noFuel;
 
-        if (movement != Vector3.zero) {
-            Assistant.updateFuel((boost > 0) ? -2 : -1);
-        }
+                //Keeping the player within the contraints of the game panel
+                //body.position = new Vector3(Mathf.Clamp(body.position.x, boundary.xMin, boundary.xMax), Mathf.Clamp(body.position.y, boundary.yMin, boundary.yMax),0.0f);
+                body.position = new Vector3(body.position.x,body.position.y, 0.0f);
+
+                //Add some bank to the ship as it moves left and right
+                //Dont want to tilt on x or y. Want the tilt on z to be relative to the speed we are moving at
+                //body.rotation = Quaternion.Euler(0.0f, 90.0f, body.velocity.y * tilt);
+
+                if (movement != Vector3.zero) {
+                    Assistant.updateFuel((boost > 0) ? -2 : -1);
+                }
+                */
+        Debug.Log(string.Format("force x{0}, y{1} / position x{2}, y{3} ", x, y, this.transform.position.x, this.transform.position.y));
+
+        body.AddForce(x, y, 0f, ForceMode.VelocityChange);
+
+        if (this.transform.position.y > 8) {
+            transform.position = new Vector3(transform.position.x, 7.8f, transform.position.z);
+        } else if (this.transform.position.y < -5) {
+            transform.position = new Vector3(transform.position.x, -4.8f, transform.position.z);
+        };
 
     }
 
@@ -103,12 +121,18 @@ public class PlayerController : MonoBehaviour {
     public void keyboardControls(bool boost, float noFuel)
     {
         float speed = (boost) ? kbMoveSpeed * 2 * noFuel : kbMoveSpeed * noFuel;
-        float x = 0f, y = 0f;
-        if (Input.GetKey(KeyCode.RightArrow)) x = speed;
-        if (Input.GetKey(KeyCode.LeftArrow)) x = -speed;
+        x = 0f;
+        y = 0f;
+        if (Input.GetKey(KeyCode.RightArrow)) {
+            x = speed;
+            this.transform.rotation = Quaternion.Euler(0, 90, 0);
+        };
+        if (Input.GetKey(KeyCode.LeftArrow)) {
+            x = -speed;
+            this.transform.rotation = Quaternion.Euler(0, 270, 0);
+        };
         if (Input.GetKey(KeyCode.UpArrow)) y = speed;
         if (Input.GetKey(KeyCode.DownArrow)) y = -speed;
-        body.AddForce(x, y, 0f, ForceMode.Force);
         if (x + y != 0) {
             Assistant.updateFuel((boost) ? -2 : -1);
         };
