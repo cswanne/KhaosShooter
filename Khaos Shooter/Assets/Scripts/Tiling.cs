@@ -10,7 +10,6 @@ public class Tiling : MonoBehaviour
     public int offsetX = 2;
     private bool hasRightBuddy = false;
     private bool hasLeftBuddy = false;
-    private bool reverseScale = false;
     private float spriteWidth = 0;
     private Camera cam;
     private Transform aTransform;
@@ -59,7 +58,6 @@ public class Tiling : MonoBehaviour
         //Make the two sprite duplicate look ok when put next to each other
         newBuddy.localScale = new Vector3(1, 1, 1);
         if (rightOrLeft < 0) {
-            //newBuddy.localScale = new Vector3(newBuddy.localScale.x * -1, newBuddy.localScale.y, newBuddy.localScale.z);
             newBuddy.rotation = Quaternion.Euler(0, 180, 0);
         } else {
             newBuddy.rotation = Quaternion.Euler(0, 0, 0);
