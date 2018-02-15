@@ -43,7 +43,7 @@ public class Asteroid : MonoBehaviour
         if (spawn == false) {
             destroyObjects("Enemy");
             destroyObjects("Boulder");
-            destroyObjects("MiscObjects");
+            //destroyObjects("MiscObjects");
         }
     }
 

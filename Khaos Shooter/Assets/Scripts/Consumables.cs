@@ -25,8 +25,9 @@ public class Consumables : MonoBehaviour
 
     private bool CantCreate(Vector3 pos)
     {
-        GameObject asteriod = FindClosestAsteriod(pos.y);
-        return (asteriod != null && asteriod.transform.position.x > pos.x && asteriod.transform.position.x < pos.x + 100);
+        return false;
+        //GameObject asteriod = FindClosestAsteriod(pos.y);
+        //return (asteriod != null && asteriod.transform.position.x > pos.x && asteriod.transform.position.x < pos.x + 100);
     }
 
     private void NewCanister()

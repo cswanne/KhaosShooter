@@ -12,7 +12,7 @@ public class Fuel : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.transform.tag == "Enemy") {
+        /*if (collision.collider.transform.tag == "Enemy") {
             Instantiate(explosion, transform.position, transform.rotation);
             Destroy(gameObject);
             Assistant.canisterDestroyTime = Time.time;
@@ -20,6 +20,6 @@ public class Fuel : MonoBehaviour {
             Assistant.updateFuel(350);
             Destroy(gameObject);
             Assistant.canisterDestroyTime = Time.time;
-        }
+        }*/
     }
 }
