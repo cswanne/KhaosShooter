@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 114838596481695652}
   - component: {fileID: 54642757283306718}
   m_Layer: 0
-  m_Name: AmmoCS
+  m_Name: Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -105,8 +105,8 @@ Transform:
   m_LocalPosition: {x: -6.27, y: -1.63, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4340986216978048}
   - {fileID: 4162684308712972}
+  - {fileID: 4340986216978048}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -134,7 +134,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4013335358340104}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!4 &4339250401413764
 Transform:
@@ -162,7 +162,7 @@ Transform:
   - {fileID: 4053086095562644}
   - {fileID: 4339250401413764}
   m_Father: {fileID: 4013335358340104}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23986968528785184
 MeshRenderer:
@@ -236,10 +236,12 @@ MonoBehaviour:
   kbMoveSpeed: 300
   tilt: 2.6
   shot: {fileID: 1682341751448566, guid: 89046d26f5e7d5045bffcb62913ad786, type: 2}
+  explosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
+  shield: {fileID: 1182350422742288, guid: f1fa77ba9d484e841b17818416347ef4, type: 2}
   shotSpawn: {fileID: 4162684308712972}
   fireRate: 0.25
   boundary:
-    xMin: -12.5
+    xMin: -10
     xMax: 10.4
     yMin: -7.1
     yMax: 6.8
@@ -251,7 +253,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1179196940938376}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.6
   m_Height: 1.7

@@ -33,3 +33,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 Khaos Shooter/.vs/Khaos Shooter/v15/Server/sqlite3/storage.ide-wal
+Khaos Shooter/.vs/Khaos Shooter/v15/Server/sqlite3/storage.ide
+Khaos Shooter/.vs/Khaos Shooter/v15/sqlite3/storage.ide
