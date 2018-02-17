@@ -43,7 +43,7 @@ public class Weapon : MonoBehaviour
 
 
 
-        if (fireRate == 0)
+        /*if (fireRate == 0)
         {
             if (Input.GetButtonDown("Fire1"))
             {
@@ -51,13 +51,13 @@ public class Weapon : MonoBehaviour
             }
         }
         else
-        {
-            if (Input.GetButton("Fire1") && Time.time > timeToFire)
+        {*/
+            if (Time.time > timeToFire)
             {
-                timeToFire = Time.time + 1 / fireRate;
+                timeToFire = Time.time + 5 / fireRate;
                 Shoot();
             }
-        }
+        //}
     }
 
     void Shoot()
