@@ -56,7 +56,8 @@ public class Tiling : MonoBehaviour
         Transform newBuddy = Instantiate(aTransform, newPosition, aTransform.rotation) as Transform;
         newBuddy.parent = aTransform.parent;
         //Make the two sprite duplicate look ok when put next to each other
-        newBuddy.localScale = new Vector3(1, 1, 1);
+        //newBuddy.localScale = new Vector3(1, 1, 1);
+        newBuddy.localScale = aTransform.localScale;
         if (rightOrLeft < 0) {
             newBuddy.rotation = Quaternion.Euler(0, 180, 0);
         } else {

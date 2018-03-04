@@ -32,7 +32,7 @@ public class DestroyByContact : MonoBehaviour {
             clone.tag = "Boulder";
             clone.transform.localScale = new Vector3(transform.localScale.x * scale, transform.localScale.y * scale, transform.localScale.z * scale);
             Rigidbody rb = clone.GetComponent<Rigidbody>();
-            rb.AddForce(new Vector3(Random.Range(-(i * 10), (i * 10)), Random.Range(-(i * 10), (i * 10)), 0), ForceMode.Acceleration);
+            rb.AddForce(new Vector3(Random.Range(-(i * 10), (i * 10)), Random.Range(-(i * 10), (i * 10)), 0), ForceMode.Impulse);
         }
     }
 
@@ -58,8 +58,8 @@ public class DestroyByContact : MonoBehaviour {
         Instantiate(explosion, transform.position, transform.rotation);
         if (gameController != null)
             gameController.AddScore(scoreValue);
-        Destroy(other.gameObject); //asteriod
-        Destroy(this.gameObject); //bullet
+        //Destroy(other.gameObject); //asteriod
+        //Destroy(this.gameObject); //bullet
     }
 
 }

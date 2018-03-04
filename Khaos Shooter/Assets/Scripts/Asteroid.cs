@@ -21,7 +21,10 @@ public class Asteroid : MonoBehaviour
         spawn = !spawn;
         if (spawn) {
             StartCoroutine(SpawnWaves());
-        };
+        } else {
+            destroyObjects("Enemy");
+            destroyObjects("Boulder");
+        }
 
     }
 
@@ -36,15 +39,6 @@ public class Asteroid : MonoBehaviour
     {
         BoxCollider[] bcs = transform.GetComponentsInChildren<BoxCollider>();
         bc = bcs[1];
-    }
-
-    void Update()
-    {
-        if (spawn == false) {
-            destroyObjects("Enemy");
-            destroyObjects("Boulder");
-            //destroyObjects("MiscObjects");
-        }
     }
 
     IEnumerator SpawnWaves()

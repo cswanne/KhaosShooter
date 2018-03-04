@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour {
         if (collision.collider.transform.tag == "Enemy") {
             Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
             Destroy(gameObject);
-            gameController.GameOver();
+            //gameController.GameOver();
         } else if (collision.collider.transform.tag == "Boulder") {
             Quaternion rot = Quaternion.Euler(new Vector3(0, 0, 86.33f));
             GameObject clone = Instantiate(shield, transform.position, rot);
