@@ -69,7 +69,7 @@ public class Weapon : MonoBehaviour
         Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
 
         // get some feedback to show that this function SHOOT has been called correctly
-        Debug.Log("Fired");
+        //Debug.Log("Fired");
         //Set up the Raycast to fire from the start poistion in the direction of the end position for a defined distance, only for a certain layer
 
         RaycastHit2D hit = Physics2D.Raycast(firePointPosition, endPosition - firePointPosition, fireDistance, whatToHit);
@@ -78,7 +78,7 @@ public class Weapon : MonoBehaviour
         Debug.DrawLine(firePointPosition, endPosition, Color.green);
 
         // monitor if the ray hits another collider and if true draw a red line and output what we hit
-        if (hit.collider != null)
+        /*if (hit.collider != null)
         {
             Debug.DrawLine(firePointPosition, endPosition, Color.red);
 
@@ -88,7 +88,7 @@ public class Weapon : MonoBehaviour
                 player.DamagePlayer(Damage);
                 Debug.Log("Object hit " + hit.collider.name + " and did " + Damage + " Damage");
             }
-        }
+        }*/
 
         if (Time.time >= timeToSpawnEffect)
         {
