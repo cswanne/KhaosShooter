@@ -23,22 +23,20 @@ public class PlayerController : MonoBehaviour {
     public Boundary boundary;
     private GameController gameController;
     private float yRotation = 90;
+    private bool applyingForce = false;
 
-    public bool keyboardControl = false;
-    
-    Rigidbody body;
+    Rigidbody2D body;
     //AudioSource fireAudio1;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        keyboardControl = true;
     }
 
     void Start ()
     {
         //Find this player's rigidbody component
-        body = this.gameObject.GetComponent<Rigidbody>();
+        body = this.gameObject.GetComponent<Rigidbody2D>();
         //fireAudio1 = this.gameObject.GetComponent<AudioSource>();
 
         GameObject gameControllerObject = GameObject.FindGameObjectWithTag("GameController");
@@ -49,11 +47,6 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.K))  {
-            keyboardControl = !keyboardControl;
-            Debug.Log("Keyboard controls enabled = " + keyboardControl);
-        }*/
-
         if ((Input.GetButton("AButton") || Input.GetKey(KeyCode.Space)) && Assistant.currentAmmo > 0 && Time.time > nextFire)  {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
@@ -64,15 +57,13 @@ public class PlayerController : MonoBehaviour {
         noFuel = 1f;
 
         if (Assistant.currentFuel == 0) noFuel = 0.25f;
-        if (keyboardControl) {
-            keyboardControls(Input.GetKey(KeyCode.Z), noFuel);
-        };
-
+        keyboardControls(Input.GetKey(KeyCode.Z), noFuel);
     }
 
     void FixedUpdate ()
     {
-        body.AddForce(x, y, 0f, ForceMode.VelocityChange);
+        body.AddForce(new Vector2(x, y), ForceMode2D.Impulse);
+
 
         if (this.transform.position.y > 8) {
             transform.position = new Vector3(transform.position.x, 7.8f, transform.position.z);
@@ -85,27 +76,31 @@ public class PlayerController : MonoBehaviour {
 
     public void keyboardControls(bool boost, float noFuel)
     {
+        if (applyingForce) return;
+
         float speed = (boost) ? kbMoveSpeed * 2 * noFuel : kbMoveSpeed * noFuel;
         x = 0f;
         y = 0f;
         if (Input.GetKey(KeyCode.RightArrow)) {
             x = speed;
-            yRotation = 90;
+            yRotation = 0;
             this.transform.rotation = Quaternion.Euler(0, yRotation, 0);
+            StartCoroutine(RestoreTilt());
         };
         if (Input.GetKey(KeyCode.LeftArrow)) {
             x = -speed;
-            yRotation = 270;
+            yRotation = 180;
             this.transform.rotation = Quaternion.Euler(0, yRotation, 0);
+            StartCoroutine(RestoreTilt());
         };
         if (Input.GetKey(KeyCode.UpArrow)) {
             y = speed;
-            body.rotation = Quaternion.Euler(0.0f, yRotation, 22);
+            //body.rotation = Quaternion.Euler(0.0f, yRotation, 22);
             StartCoroutine(RestoreTilt());
         };
         if (Input.GetKey(KeyCode.DownArrow)) {
             y = -speed;
-            body.rotation = Quaternion.Euler(0.0f, yRotation, -22);
+            //body.rotation = Quaternion.Euler(0.0f, yRotation, -22);
             StartCoroutine(RestoreTilt());
         };
         if (x + y != 0) {
@@ -129,7 +124,8 @@ public class PlayerController : MonoBehaviour {
     IEnumerator RestoreTilt()
     {
         yield return new WaitForSeconds(2);
-        body.rotation = Quaternion.Euler(0.0f, yRotation, 0.0f);
+
+        //body.rotation = Quaternion.Euler(0.0f, yRotation, 0.0f);
     }
 
 }

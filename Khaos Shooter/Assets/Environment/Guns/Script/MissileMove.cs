@@ -11,7 +11,8 @@ public class MissileMove : MonoBehaviour {
 
     public float speed = 5;
     public float rotatingSpeed = 1;
-    public GameObject target;
+    private GameObject target;
+    public GameObject explosion;
 
     private bool onMyWay;
 
@@ -48,7 +49,8 @@ public class MissileMove : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        int i = 0;
+        Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 
 }

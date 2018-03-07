@@ -11,7 +11,7 @@ public class CameraFollow : MonoBehaviour {
     public float yPosBoundry = 0; //custom
 
     private float m_OffsetZ;
-    private Vector3 m_LastTargetPosition;
+    private Vector2 m_LastTargetPosition;
     private Vector3 m_CurrentVelocity;
     private Vector3 m_LookAheadPos;
 
@@ -43,7 +43,8 @@ public class CameraFollow : MonoBehaviour {
         if (target == null) return;
 
         // only update lookahead pos if accelerating or changed direction
-        float xMoveDelta = (target.position - m_LastTargetPosition).x;
+        //float xMoveDelta = (target.position - m_LastTargetPosition).x;
+        float xMoveDelta = target.position.x - m_LastTargetPosition.x;
 
         bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
 

@@ -37,8 +37,6 @@ public class Asteroid : MonoBehaviour
 
     private void Start()
     {
-        BoxCollider[] bcs = transform.GetComponentsInChildren<BoxCollider>();
-        bc = bcs[1];
     }
 
     IEnumerator SpawnWaves()
