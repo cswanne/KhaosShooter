@@ -37,24 +37,18 @@ public class MissileMove : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (onMyWay) {
+        if (onMyWay && target != null) {
             Vector2 pointToTarget = (Vector2)transform.position - (Vector2)target.transform.position;
             pointToTarget.Normalize();
-
             float value = Vector3.Cross(pointToTarget, transform.right).z;
-            Debug.Log(value);
-            /*if (value > 0) {
-                body.angularVelocity = rotatingSpeed;
-            } else if (value < 0) {
-                body.angularVelocity = -rotatingSpeed;
-            } else {
-                body.angularVelocity = 0;
-            };*/
-
             body.angularVelocity = rotatingSpeed * value;
-
             body.velocity = transform.right * speed;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        int i = 0;
     }
 
 }
