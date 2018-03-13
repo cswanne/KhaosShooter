@@ -13,6 +13,7 @@ public class MissileMove : MonoBehaviour {
     public float rotatingSpeed = 1;
     private GameObject target;
     public GameObject explosion;
+    public int hitPoints = 2;
 
     private bool onMyWay;
 
@@ -23,11 +24,11 @@ public class MissileMove : MonoBehaviour {
 
         body = this.gameObject.GetComponent<Rigidbody2D>();
         body.velocity = transform.right * startSpeed;
-        StartCoroutine("missile");
+        StartCoroutine("Missile");
         onMyWay = false;
     }
 	
-	IEnumerator missile()
+	IEnumerator Missile()
     {
         yield return new WaitForSeconds(2);
         body.velocity = transform.right * missileSpeed;
@@ -49,8 +50,17 @@ public class MissileMove : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Instantiate(explosion, transform.position, transform.rotation);
-        Destroy(gameObject);
+        if (collision.transform.tag == "Bolt") {
+            hitPoints--;
+            Instantiate(explosion, transform.position, transform.rotation);
+            explosion.transform.localScale = explosion.transform.localScale * 0.1f;
+        } else {
+            hitPoints = 0;
+        }
+        if (hitPoints <= 0) {
+            Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
     }
 
 }
