@@ -23,9 +23,6 @@ GameObject:
   - component: {fileID: 23963743863693120}
   - component: {fileID: 54647917501506468}
   - component: {fileID: 136171222964804474}
-  - component: {fileID: 114058987132901906}
-  - component: {fileID: 114641032823123260}
-  - component: {fileID: 114093008738877164}
   m_Layer: 0
   m_Name: asteroid_01
   m_TagString: Enemy
@@ -102,44 +99,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114058987132901906
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1905022628922024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2d8115bed85a1e4fbdd3e673439f594, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minSpeed: 3
-  maxSpeed: 7
---- !u!114 &114093008738877164
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1905022628922024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ff650a65e1efba4c9db24ffc9feacea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 100004, guid: 2857e183f4cd3df4e9096e5b578bd32f, type: 2}
-  scoreValue: 10
---- !u!114 &114641032823123260
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1905022628922024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e05b80f9c1cbee94e88ff0d6f72e812c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tumble: 5
 --- !u!136 &136171222964804474
 CapsuleCollider:
   m_ObjectHideFlags: 1
