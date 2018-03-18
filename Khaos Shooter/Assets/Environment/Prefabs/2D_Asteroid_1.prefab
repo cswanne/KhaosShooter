@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 212580324642841406}
   - component: {fileID: 61417303401498270}
   - component: {fileID: 50584872878700782}
-  - component: {fileID: 114407982726946232}
   - component: {fileID: 114842603598375954}
   m_Layer: 0
   m_Name: 2D_Asteroid_1
@@ -55,7 +54,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 500
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -89,19 +88,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8249278, y: 1.1629186}
   m_EdgeRadius: 0
---- !u!114 &114407982726946232
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1687811972112670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aaa86ddf4b724b4ca937248b7262cda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minSpeed: 5
-  maxSpeed: 15
 --- !u!114 &114842603598375954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -115,6 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 100004, guid: 2857e183f4cd3df4e9096e5b578bd32f, type: 2}
   hitPoints: 1
+  minSpeed: 4
+  maxSpeed: 6
+  damage: 10
 --- !u!212 &212580324642841406
 SpriteRenderer:
   m_ObjectHideFlags: 1

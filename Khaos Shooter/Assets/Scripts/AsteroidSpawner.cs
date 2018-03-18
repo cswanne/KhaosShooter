@@ -2,41 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Asteroid : MonoBehaviour
+public class AsteroidSpawner : MonoBehaviour
 {
 
     public GameObject[] asteroidTypes;
-    
-    public Vector3 spawnValues;
+
     public int hazardCount;
     public float spawnWait;
     public float startWait;
     public float waveWait;
 
     private bool spawn;
-    private BoxCollider bc;
+    private float spawnX = 0f;
+    private float spawnYBottom = 0;
+    private float spawnYTop = 0;
+
 
     public void startStop()
     {
         spawn = !spawn;
         if (spawn) {
             StartCoroutine(SpawnWaves());
-        } else {
-            destroyObjects("Enemy");
-            destroyObjects("Boulder");
-        }
-
-    }
-
-    void destroyObjects(string tagName)
-    {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag(tagName);
-        foreach (GameObject obj in objects)
-            GameObject.Destroy(obj);
+        } 
     }
 
     private void Start()
     {
+        Transform obj = transform.GetChild(1);
+        if (obj.name == "End") {
+            spawnX = obj.transform.position.x + 50;
+            BoxCollider2D col = obj.GetComponent<BoxCollider2D>();
+            spawnYBottom = -((col.size.y - obj.position.y) / 2.2f);
+            spawnYTop = (col.size.y - obj.position.y) - 4;
+        }
     }
 
     IEnumerator SpawnWaves()
@@ -44,11 +42,10 @@ public class Asteroid : MonoBehaviour
         yield return new WaitForSeconds(startWait);
 
         GameObject hazard;
-
         while (spawn == true) {
             for (int i = 0; i < hazardCount; i++) {
                 if (!spawn) continue;
-                Vector3 spawnPosition = new Vector3(150/*bc.transform.parent.position.x*/, Random.Range(-spawnValues.y, spawnValues.y), spawnValues.z);
+                Vector3 spawnPosition = new Vector3(spawnX, Random.Range(spawnYTop, spawnYBottom), transform.position.z);
                 Quaternion spawnRotation = Quaternion.identity;
                 hazard = asteroidTypes[Mathf.RoundToInt(Random.Range(0, 3))];
                 Instantiate(hazard, spawnPosition, spawnRotation);
@@ -58,4 +55,5 @@ public class Asteroid : MonoBehaviour
         }
     }
 }
+
 

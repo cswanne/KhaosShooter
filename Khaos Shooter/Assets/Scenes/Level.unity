@@ -1175,7 +1175,7 @@ RectTransform:
   m_GameObject: {fileID: 933651046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 12.620001}
-  m_LocalScale: {x: 0.0335958, y: 0.0335958, z: 0.0335958}
+  m_LocalScale: {x: 0.04714549, y: 0.04714549, z: 0.04714549}
   m_Children:
   - {fileID: 1824383253}
   m_Father: {fileID: 0}
@@ -1895,7 +1895,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1738372783}
   m_Layer: 0
-  m_Name: LevelElementsNoInteractive
+  m_Name: LevelElementsNonInteractive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2225,18 +2225,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1977191885}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19c017a53ac11974c98941b1d061bb37, type: 3}
+  m_Script: {fileID: 11500000, guid: f7e3d539fae1aa84fb133b0956673225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   asteroidTypes:
   - {fileID: 1687811972112670, guid: c47f3795c312e8b4db10242d91789152, type: 2}
   - {fileID: 1961152048363886, guid: 0e1850f6caeb25f4896f0e3f12e3b4d5, type: 2}
   - {fileID: 1917705976946376, guid: 045fd65c2b06a4f4f8c1af67d8d72883, type: 2}
-  spawnValues: {x: 0, y: 8, z: -4}
-  hazardCount: 5
-  spawnWait: 0.8
+  hazardCount: 3
+  spawnWait: 0
   startWait: 1
-  waveWait: 1.5
+  waveWait: 3
 --- !u!4 &1977191887
 Transform:
   m_ObjectHideFlags: 0

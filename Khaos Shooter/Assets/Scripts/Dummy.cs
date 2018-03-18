@@ -5,18 +5,4 @@ using UnityEngine.SceneManagement;
 
 public class Dummy : MonoBehaviour {
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update () {
-
-        if (Input.GetButton("Start") || Input.GetKeyDown(KeyCode.S))
-        {
-            SceneManager.LoadScene("02_Level1");
-        }
-		
-	}
 }

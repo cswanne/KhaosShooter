@@ -7,8 +7,8 @@ public class AsteroidStart : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player") {
-            MonoBehaviour script = this.transform.parent.GetComponent<MonoBehaviour>();
-            (script as Asteroid).startStop();
+            AsteroidSpawner script = this.transform.parent.GetComponent<AsteroidSpawner>();
+            script.startStop();
         }
     }
 }

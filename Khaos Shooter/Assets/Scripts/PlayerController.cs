@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
     private GameController gameController;
     private float yRotation = 90;
     private bool applyingForce = false;
+    private int hitPoints = 100;
 
     Rigidbody2D body;
     //AudioSource fireAudio1;
@@ -85,47 +86,39 @@ public class PlayerController : MonoBehaviour {
             x = speed;
             yRotation = 0;
             this.transform.rotation = Quaternion.Euler(0, yRotation, 0);
-            StartCoroutine(RestoreTilt());
         };
         if (Input.GetKey(KeyCode.LeftArrow)) {
             x = -speed;
             yRotation = 180;
             this.transform.rotation = Quaternion.Euler(0, yRotation, 0);
-            StartCoroutine(RestoreTilt());
         };
         if (Input.GetKey(KeyCode.UpArrow)) {
             y = speed;
-            //body.rotation = Quaternion.Euler(0.0f, yRotation, 22);
-            StartCoroutine(RestoreTilt());
         };
         if (Input.GetKey(KeyCode.DownArrow)) {
             y = -speed;
-            //body.rotation = Quaternion.Euler(0.0f, yRotation, -22);
-            StartCoroutine(RestoreTilt());
         };
         if (x + y != 0) {
             Assistant.updateFuel((boost) ? -2 : -1);
         };
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.transform.tag == "Enemy") {
-            Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
-            Destroy(gameObject);
-            //gameController.GameOver();
+            AsteroidCollide script = collision.gameObject.GetComponent<AsteroidCollide>();
+            hitPoints -= script.damage;
+            Destroy(collision.gameObject);
+            if (hitPoints <= 0) {
+                Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
+                Destroy(gameObject);
+                //gameController.GameOver();
+            }
         } else if (collision.collider.transform.tag == "Boulder") {
-            Quaternion rot = Quaternion.Euler(new Vector3(0, 0, 86.33f));
-            GameObject clone = Instantiate(shield, transform.position, rot);
-            clone.transform.parent = transform;
+            //Quaternion rot = Quaternion.Euler(new Vector3(0, 0, 86.33f));
+            GameObject clone = Instantiate(shield, transform.position, transform.rotation, transform);
+            //clone.transform.parent = transform;
         }
-    }
-
-    IEnumerator RestoreTilt()
-    {
-        yield return new WaitForSeconds(2);
-
-        //body.rotation = Quaternion.Euler(0.0f, yRotation, 0.0f);
     }
 
 }

@@ -21,7 +21,7 @@ public class MissileMove : MonoBehaviour {
     {
         if (target == null)
             target = GameObject.FindGameObjectWithTag("Player");
-
+        if (target == null) Destroy(gameObject);
         body = this.gameObject.GetComponent<Rigidbody2D>();
         body.velocity = transform.right * startSpeed;
         StartCoroutine("Missile");
@@ -36,7 +36,6 @@ public class MissileMove : MonoBehaviour {
         onMyWay = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (onMyWay && target != null) {
