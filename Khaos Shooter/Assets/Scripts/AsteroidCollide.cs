@@ -29,6 +29,8 @@ public class AsteroidCollide : MonoBehaviour {
             clone.tag = "Boulder";
             clone.transform.localScale = new Vector3(transform.localScale.x * scale, transform.localScale.y * scale, transform.localScale.z * scale);
             Destroy(clone.gameObject, 20);
+            Collider2D col = clone.GetComponent<Collider2D>();
+            col.enabled = true;
             Rigidbody2D rb = clone.GetComponent<Rigidbody2D>();
             rb.mass = 1;
             rb.constraints = 0;
@@ -63,8 +65,9 @@ public class AsteroidCollide : MonoBehaviour {
             }
         } else if (contactTag == "Enemy" && this.tag == "Enemy") { //two asteriods
             Fragment(transform.gameObject);
-        } else if (contactTag == "Boulder" && this.tag == "Enemy") { //boulder hitting asteriod
-            Fragment(transform.gameObject);
+        } else if (contactTag == "Player" && this.tag == "Boulder") { //free boulder
+            Destroy(transform.gameObject);
+        } else if (contactTag == "Boulder" && this.tag == "Enemy") { //do nothing
         } else if (contactTag == "Boulder" && this.tag == "Boulder") { //do nothing
         } else if (contactTag != "Boulder" && this.tag == "Boulder") { //anything else
             Destroy(transform.gameObject);
@@ -72,3 +75,4 @@ public class AsteroidCollide : MonoBehaviour {
     }
 
 }
+

@@ -115,9 +115,9 @@ public class PlayerController : MonoBehaviour {
                 //gameController.GameOver();
             }
         } else if (collision.collider.transform.tag == "Boulder") {
-            //Quaternion rot = Quaternion.Euler(new Vector3(0, 0, 86.33f));
-            GameObject clone = Instantiate(shield, transform.position, transform.rotation, transform);
-            //clone.transform.parent = transform;
+            Quaternion rot = Quaternion.Euler(new Vector3(0, 0, 86.33f));
+            GameObject clone = Instantiate(shield, transform.position, rot, transform);
+            clone.transform.parent = transform;
         }
     }
 
