@@ -46,11 +46,12 @@ public class MissileMove : MonoBehaviour
 
     void Update()
     {
-        if (target == null) {
+        if (target == null && fuel > 0) {
             target = player;
         }
         if (onMyWay && target != null) {
             Vector2 pointToTarget = (Vector2)transform.position - (Vector2)target.transform.position;
+            if (target == player) pointToTarget.y += 1;
             pointToTarget.Normalize();
             float value = Vector3.Cross(pointToTarget, transform.right).z;
             body.angularVelocity = rotatingSpeed * value;
@@ -68,11 +69,12 @@ public class MissileMove : MonoBehaviour
         }
 
         if (Assistant.lookForChaff) {
-            Assistant.lookForChaff = false;
-            GameObject[] chaff = GameObject.FindGameObjectsWithTag("Chaff");
-            foreach (GameObject go in chaff) {
-                target = go;
-                break;
+            if (target == player || target == null) {
+                GameObject[] chaff = GameObject.FindGameObjectsWithTag("Chaff");
+                foreach (GameObject go in chaff) {
+                    target = go;
+                    break;
+                }
             }
         }
     }

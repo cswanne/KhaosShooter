@@ -111,7 +111,14 @@ public class PlayerController : MonoBehaviour {
             GameObject clone = Instantiate(chaff, pos, transform.rotation, null);
             Destroy(clone, 2);
             Assistant.lookForChaff = true;
+            StartCoroutine(StopLooking());
         }
+    }
+
+    IEnumerator StopLooking()
+    {
+        yield return new WaitForSeconds(2);
+        Assistant.lookForChaff = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

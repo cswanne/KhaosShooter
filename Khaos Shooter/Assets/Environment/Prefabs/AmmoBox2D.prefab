@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 212330616058758372}
   - component: {fileID: 61744800707372442}
   m_Layer: 0
-  m_Name: AmmoBoxLarge
+  m_Name: AmmoBox2D
   m_TagString: Ammo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
