@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour {
     private float yRotation = 90;
     private bool applyingForce = false;
     private int hitPoints = 100;
+    private bool giftOnBoard = false;
+
 
     Rigidbody2D body;
     //AudioSource fireAudio1;
@@ -121,4 +123,30 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    private void giftImage(bool show)
+    {
+        GameObject giftImage = GameObject.Find("Canvas/Panel/GiftImage");
+        if (giftImage != null) {
+            MonoBehaviour gi = giftImage.GetComponent<MonoBehaviour>();
+            gi.enabled = show;
+        };
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Ammo") {
+            Assistant.maxAmmo();
+            Destroy(collision.gameObject);
+        } else if (collision.transform.tag == "Fuel") {
+            Assistant.addFuel();
+            Destroy(collision.gameObject);
+        } else if (collision.transform.name == "Gift2D" && !giftOnBoard) {
+            giftOnBoard = true;
+            giftImage(giftOnBoard);
+            Destroy(collision.gameObject);
+        } else if (collision.transform.name == "Bucket" && giftOnBoard) {
+            giftOnBoard = false;
+            giftImage(giftOnBoard);
+        }
+    }
 }

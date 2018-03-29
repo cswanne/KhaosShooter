@@ -122,6 +122,8 @@ MonoBehaviour:
   speed: 5
   rotatingSpeed: 400
   explosion: {fileID: 100004, guid: 2857e183f4cd3df4e9096e5b578bd32f, type: 2}
+  hitPoints: 2
+  fuel: 10
 --- !u!212 &212637259890011614
 SpriteRenderer:
   m_ObjectHideFlags: 1

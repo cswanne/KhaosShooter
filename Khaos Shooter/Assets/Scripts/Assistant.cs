@@ -25,6 +25,16 @@ public static class Assistant
         else if (currentAmmo > 50) currentAmmo = 50;
     }
 
+    public static void maxAmmo()
+    {
+        updateAmmo(999);
+    }
+
+    public static void addFuel()
+    {
+        updateFuel(250);
+    }
+
     //Serilise
     public static string Serialize<T>(this T toSerialize)
     {

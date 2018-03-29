@@ -14,8 +14,10 @@ public class MissileMove : MonoBehaviour {
     private GameObject target;
     public GameObject explosion;
     public int hitPoints = 2;
+    public int fuel = 10;
 
     private bool onMyWay;
+    private float nextActionTime;
 
     void Start ()
     {
@@ -24,8 +26,11 @@ public class MissileMove : MonoBehaviour {
         if (target == null) Destroy(gameObject);
         body = this.gameObject.GetComponent<Rigidbody2D>();
         body.velocity = transform.right * startSpeed;
+
         StartCoroutine("Missile");
         onMyWay = false;
+        nextActionTime = Time.time;
+        fuel = 10;
     }
 	
 	IEnumerator Missile()
@@ -44,6 +49,16 @@ public class MissileMove : MonoBehaviour {
             float value = Vector3.Cross(pointToTarget, transform.right).z;
             body.angularVelocity = rotatingSpeed * value;
             body.velocity = transform.right * speed;
+        }
+        if (Time.time > nextActionTime) {
+            nextActionTime += 1;
+            fuel -= 1;
+            if (fuel < 0) {
+                target = null;  
+                body.angularVelocity = transform.right.x * 30f;
+                body.gravityScale = 0.5f;
+                Destroy(gameObject, 4);
+            }
         }
     }
 

@@ -10,6 +10,8 @@ TagManager:
   - MiscObjects
   - Boulder
   - Bolt
+  - Ammo
+  - Fuel
   layers:
   - Default
   - TransparentFX
