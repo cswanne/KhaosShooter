@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissileMove : MonoBehaviour {
+public class MissileMove : MonoBehaviour
+{
 
 
     public float startSpeed;
@@ -11,6 +12,7 @@ public class MissileMove : MonoBehaviour {
 
     public float speed = 5;
     public float rotatingSpeed = 1;
+    private GameObject player;
     private GameObject target;
     public GameObject explosion;
     public int hitPoints = 2;
@@ -19,10 +21,11 @@ public class MissileMove : MonoBehaviour {
     private bool onMyWay;
     private float nextActionTime;
 
-    void Start ()
+    void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         if (target == null)
-            target = GameObject.FindGameObjectWithTag("Player");
+            target = player;
         if (target == null) Destroy(gameObject);
         body = this.gameObject.GetComponent<Rigidbody2D>();
         body.velocity = transform.right * startSpeed;
@@ -32,8 +35,8 @@ public class MissileMove : MonoBehaviour {
         nextActionTime = Time.time;
         fuel = 10;
     }
-	
-	IEnumerator Missile()
+
+    IEnumerator Missile()
     {
         yield return new WaitForSeconds(2);
         body.velocity = transform.right * missileSpeed;
@@ -43,6 +46,9 @@ public class MissileMove : MonoBehaviour {
 
     void Update()
     {
+        if (target == null) {
+            target = player;
+        }
         if (onMyWay && target != null) {
             Vector2 pointToTarget = (Vector2)transform.position - (Vector2)target.transform.position;
             pointToTarget.Normalize();
@@ -54,10 +60,19 @@ public class MissileMove : MonoBehaviour {
             nextActionTime += 1;
             fuel -= 1;
             if (fuel < 0) {
-                target = null;  
+                target = null;
                 body.angularVelocity = transform.right.x * 30f;
                 body.gravityScale = 0.5f;
                 Destroy(gameObject, 4);
+            }
+        }
+
+        if (Assistant.lookForChaff) {
+            Assistant.lookForChaff = false;
+            GameObject[] chaff = GameObject.FindGameObjectsWithTag("Chaff");
+            foreach (GameObject go in chaff) {
+                target = go;
+                break;
             }
         }
     }
@@ -77,4 +92,12 @@ public class MissileMove : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Chaff") {
+            Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(gameObject);
+            Destroy(collision.gameObject);
+        }
+    }
 }

@@ -17,10 +17,12 @@ public class PlayerController : MonoBehaviour {
     public GameObject shot;
     public GameObject explosion;
     public GameObject shield;
+    public GameObject chaff;
     public Transform shotSpawn;
-    private float nextFire = 0.5f;
     public float fireRate = 0.25f;
     public Boundary boundary;
+
+    private float nextFire = 0.5f;
     private GameController gameController;
     private float yRotation = 90;
     private bool applyingForce = false;
@@ -103,6 +105,13 @@ public class PlayerController : MonoBehaviour {
         if (x + y != 0) {
             Assistant.updateFuel((boost) ? -2 : -1);
         };
+        if (Input.GetKey(KeyCode.C)) {
+            Vector3 pos = transform.position;
+            pos.x -= transform.right.x * 3f;
+            GameObject clone = Instantiate(chaff, pos, transform.rotation, null);
+            Destroy(clone, 2);
+            Assistant.lookForChaff = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

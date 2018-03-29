@@ -10,7 +10,8 @@ public static class Assistant
     public static int currentFuel = 1000;
     public static int currentAmmo = 50;
     public static float canisterDestroyTime = 0f;
-
+    public static bool lookForChaff = false;
+    
     public static void updateFuel(int value)
     {
         currentFuel += value;

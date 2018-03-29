@@ -12,6 +12,7 @@ TagManager:
   - Bolt
   - Ammo
   - Fuel
+  - Chaff
   layers:
   - Default
   - TransparentFX
