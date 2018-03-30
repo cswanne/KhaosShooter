@@ -738,7 +738,7 @@ Prefab:
     - target: {fileID: 50957177081826652, guid: be0f462343e65c14b81e5d15d0b41045,
         type: 2}
       propertyPath: m_LinearDrag
-      value: 9
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 50957177081826652, guid: be0f462343e65c14b81e5d15d0b41045,
         type: 2}

@@ -23,9 +23,11 @@ public class PlayerController : MonoBehaviour {
     public Boundary boundary;
 
     private float nextFire = 0.5f;
+    private float nextKey = 0f;
     private GameController gameController;
-    private float yRotation = 90;
+    private float yRotation = 0;
     private bool applyingForce = false;
+    private bool pressingKey = false;
     private int hitPoints = 100;
     private bool giftOnBoard = false;
 
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour {
         if (gameControllerObject != null) {
             gameController = gameControllerObject.GetComponent<GameController>();
         }
+        nextKey = Time.time;
     }
 
     private void Update()
@@ -62,13 +65,16 @@ public class PlayerController : MonoBehaviour {
         noFuel = 1f;
 
         if (Assistant.currentFuel == 0) noFuel = 0.25f;
-        keyboardControls(Input.GetKey(KeyCode.Z), noFuel);
+        if (Time.time > nextKey) {
+            keyboardControls(Input.GetKey(KeyCode.Z), noFuel);
+            nextKey += 0.05f;
+        }
+        
     }
 
     void FixedUpdate ()
     {
         body.AddForce(new Vector2(x, y), ForceMode2D.Impulse);
-
 
         if (this.transform.position.y > 8) {
             transform.position = new Vector3(transform.position.x, 7.8f, transform.position.z);
@@ -82,37 +88,66 @@ public class PlayerController : MonoBehaviour {
     public void keyboardControls(bool boost, float noFuel)
     {
         if (applyingForce) return;
+        if (pressingKey) return;
+
 
         float speed = (boost) ? kbMoveSpeed * 2 * noFuel : kbMoveSpeed * noFuel;
         x = 0f;
         y = 0f;
         if (Input.GetKey(KeyCode.RightArrow)) {
+            pressingKey = true;
             x = speed;
             yRotation = 0;
-            this.transform.rotation = Quaternion.Euler(0, yRotation, 0);
         };
         if (Input.GetKey(KeyCode.LeftArrow)) {
+            pressingKey = true;
             x = -speed;
             yRotation = 180;
-            this.transform.rotation = Quaternion.Euler(0, yRotation, 0);
         };
         if (Input.GetKey(KeyCode.UpArrow)) {
+            pressingKey = true;
             y = speed;
         };
         if (Input.GetKey(KeyCode.DownArrow)) {
+            pressingKey = true;
             y = -speed;
         };
         if (x + y != 0) {
+            pressingKey = true;
             Assistant.updateFuel((boost) ? -2 : -1);
         };
         if (Input.GetKey(KeyCode.C)) {
-            Vector3 pos = transform.position;
-            pos.x -= transform.right.x * 3f;
-            GameObject clone = Instantiate(chaff, pos, transform.rotation, null);
-            Destroy(clone, 2);
-            Assistant.lookForChaff = true;
-            StartCoroutine(StopLooking());
+            pressingKey = true;
+            StartCoroutine(CPressed());
         }
+        //redAlertShieldsUp
+        Quaternion rot = Quaternion.Euler(0, yRotation, 0);
+        if (this.transform.rotation != rot)
+            this.transform.rotation = rot;
+
+        if (pressingKey) StartCoroutine(KeyPressed());
+
+    }
+
+    IEnumerator KeyPressed()
+    {
+        yield return new WaitForSeconds(0.05f);
+        pressingKey = false;
+    } 
+
+    IEnumerator CPressed()
+    {
+        Debug.Log("c");
+
+        yield return new WaitForSeconds(0.1f);
+
+        Vector3 pos = transform.position;
+        pos.x -= transform.right.x * 3f;
+        GameObject clone = Instantiate(chaff, pos, transform.rotation, null);
+        Destroy(clone, 2);
+        Assistant.lookForChaff = true;
+        StartCoroutine(StopLooking());
+        yield return new WaitForSeconds(0.5f);
     }
 
     IEnumerator StopLooking()
