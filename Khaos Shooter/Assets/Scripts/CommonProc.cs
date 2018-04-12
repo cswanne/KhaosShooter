@@ -1,16 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CommonProc : MonoBehaviour {
 
-    private GameObject mainText;
-    private MonoBehaviour textScript;
+    private GameObject textObject;
+    private Text mainText;
 
     private void Start()
     {
-        GameObject mainText = GameObject.Find("Canvas/Panel/Text");
-        textScript = mainText.GetComponent<MonoBehaviour>();
+        GameObject textObject = GameObject.Find("Canvas/Panel/Text");
+        mainText = textObject.GetComponent<Text>();
     }
 
     public bool trackToObject(Rigidbody2D body, GameObject target, float speed, bool greenNotRed)
@@ -49,7 +50,7 @@ public class CommonProc : MonoBehaviour {
     public void updateText(string text)
     {
         if (mainText == null) return;
-
+        mainText.text = text;
     }
 
 }

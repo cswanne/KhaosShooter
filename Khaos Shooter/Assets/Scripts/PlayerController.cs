@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     void Start ()
@@ -207,15 +207,24 @@ public class PlayerController : MonoBehaviour {
     {
         if (collision.collider.transform.tag == "Enemy") {
             AsteroidCollide script = collision.gameObject.GetComponent<AsteroidCollide>();
-            hitPoints -= script.damage / (shieldUp ? 2 : 1);
-            commonProc.updateText(hitPoints.ToString()); //not working
-            Destroy(collision.gameObject);
-            if (hitPoints <= 0) {
-                GameObject ex = Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
-                Destroy(ex, 1);
-                Destroy(gameObject);
-            }
+            hurtMe(script.damage, collision);
+        } else if (collision.collider.transform.tag == "Missile") {
+            MissileMove script = collision.gameObject.GetComponent<MissileMove>();
+            hurtMe(script.damage, collision);
         } else if (collision.collider.transform.tag == "Boulder") {
+            hurtMe(2, collision);
+        }
+    }
+
+    private void hurtMe(int damage, Collision2D collision)
+    {
+        hitPoints -= damage / (shieldUp ? 2 : 1);
+        commonProc.updateText(hitPoints.ToString()); //not working
+        Destroy(collision.gameObject);
+        if (hitPoints <= 0) {
+            GameObject ex = Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
+            Destroy(ex, 1);
+            Destroy(gameObject);
         }
     }
 

@@ -32,89 +32,89 @@ public class GameController : MonoBehaviour {
 
     private void Start()
     {
-        restart = false;
-        spawn = true;
-        //gameOverText.text = "";
-        scoreText.text = ("Score: " + SaveManager.Instance.state.score.ToString());
-        levelText.text = ("Level: " + (SaveManager.Instance.state.currentLevelIndex - 1));
-        currentLevelIndex = SaveManager.Instance.state.currentLevelIndex;
-        StartCoroutine (SpawnWaves());
-        Debug.Log("Current level index = " + SaveManager.Instance.state.currentLevelIndex);
-       // fuelSliderText = fuelSlider.GetComponentInChildren<Text>();
-       // ammoSliderText = ammoSlider.GetComponentInChildren<Text>();
+       // restart = false;
+       // spawn = true;
+       // //gameOverText.text = "";
+       // scoreText.text = ("Score: " + SaveManager.Instance.state.score.ToString());
+       // levelText.text = ("Level: " + (SaveManager.Instance.state.currentLevelIndex - 1));
+       // currentLevelIndex = SaveManager.Instance.state.currentLevelIndex;
+       // StartCoroutine (SpawnWaves());
+       // Debug.Log("Current level index = " + SaveManager.Instance.state.currentLevelIndex);
+       //// fuelSliderText = fuelSlider.GetComponentInChildren<Text>();
+       //// ammoSliderText = ammoSlider.GetComponentInChildren<Text>();
     }
 
     private void Update()
     {
-        if (restart)
-        {
-            SaveManager.Instance.ResetSave();
+//        if (restart)
+//        {
+//            SaveManager.Instance.ResetSave();
 
-            if (Input.GetButton("Start") || Input.GetKeyDown(KeyCode.S))
-            {
-                SceneManager.LoadScene(1);
-                SaveManager.Instance.Load();
-            }
-        }
+//            if (Input.GetButton("Start") || Input.GetKeyDown(KeyCode.S))
+//            {
+//                SceneManager.LoadScene(1);
+//                SaveManager.Instance.Load();
+//            }
+//        }
 
         
-        //Free game objects on game over
-        if (spawn == false || Assistant.gameOver == true) {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject obj in enemies)
-                GameObject.Destroy(obj);
-            GameObject[] misc = GameObject.FindGameObjectsWithTag("MiscObjects");
-            foreach (GameObject obj in misc)
-                GameObject.Destroy(obj);
-            restart = true;
-            spawn = false;
-        }
+//        //Free game objects on game over
+//        if (spawn == false || Assistant.gameOver == true) {
+//            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+//            foreach (GameObject obj in enemies)
+//                GameObject.Destroy(obj);
+//            GameObject[] misc = GameObject.FindGameObjectsWithTag("MiscObjects");
+//            foreach (GameObject obj in misc)
+//                GameObject.Destroy(obj);
+//            restart = true;
+//            spawn = false;
+//        }
 
-        //Update consumable values
-        fuelSlider.value = Mathf.Clamp01(Assistant.currentFuel / 1000f);
-        ammoSlider.value = Mathf.Clamp01(Assistant.currentAmmo / 50f);
-//        fuelSliderText.text = string.Format("{0:0}%", fuelSlider.value * 100f);
-        //ammoSliderText.text = string.Format("{0:0}%", ammoSlider.value * 100f);
+//        //Update consumable values
+//        fuelSlider.value = Mathf.Clamp01(Assistant.currentFuel / 1000f);
+//        ammoSlider.value = Mathf.Clamp01(Assistant.currentAmmo / 50f);
+////        fuelSliderText.text = string.Format("{0:0}%", fuelSlider.value * 100f);
+//        //ammoSliderText.text = string.Format("{0:0}%", ammoSlider.value * 100f);
     }
 
-    IEnumerator SpawnWaves()
-    {
-        yield return new WaitForSeconds(startWait);
+    //IEnumerator SpawnWaves()
+    //{
+    //    yield return new WaitForSeconds(startWait);
 
 
-        GameObject hazard;
+    //    GameObject hazard;
 
-        while (spawn == true)
-        {
-            for (int i = 0; i < hazardCount; i++)
-            {
-                if (!spawn) continue;
-                Vector3 spawnPosition = new Vector3(spawnValues.x, Random.Range(-spawnValues.y, spawnValues.y), spawnValues.z);
-                Quaternion spawnRotation = Quaternion.identity;
-                hazard = hazards[Mathf.RoundToInt(Random.Range(0, 3))];
-                Instantiate(hazard, spawnPosition, spawnRotation);
-                yield return new WaitForSeconds(spawnWait);
-            }
-            yield return new WaitForSeconds(waveWait);
-        }
-    }
+    //    while (spawn == true)
+    //    {
+    //        for (int i = 0; i < hazardCount; i++)
+    //        {
+    //            if (!spawn) continue;
+    //            Vector3 spawnPosition = new Vector3(spawnValues.x, Random.Range(-spawnValues.y, spawnValues.y), spawnValues.z);
+    //            Quaternion spawnRotation = Quaternion.identity;
+    //            hazard = hazards[Mathf.RoundToInt(Random.Range(0, 3))];
+    //            Instantiate(hazard, spawnPosition, spawnRotation);
+    //            yield return new WaitForSeconds(spawnWait);
+    //        }
+    //        yield return new WaitForSeconds(waveWait);
+    //    }
+    //}
 
-    public void AddScore(int newScoreValue)
-    {
-        SaveManager.Instance.state.score += newScoreValue;
-        updateScore();
-    }
+//    public void AddScore(int newScoreValue)
+//    {
+//        SaveManager.Instance.state.score += newScoreValue;
+//        updateScore();
+//    }
 
-    void updateScore() //just updates the score text object
-    {
-        scoreText.text = ("Score: " + SaveManager.Instance.state.score);
-        LevelManager.Instance.LevelControl(currentLevelIndex);
-    }
+//    void updateScore() //just updates the score text object
+//    {
+////        scoreText.text = ("Score: " + SaveManager.Instance.state.score);
+////        LevelManager.Instance.LevelControl(currentLevelIndex);
+//    }
 
-    public void GameOver()
-    {
-        //gameOverText.text = "Game Over!";
-        Assistant.gameOver = true;
-    }
+//    public void GameOver()
+//    {
+//        //gameOverText.text = "Game Over!";
+//        Assistant.gameOver = true;
+//    }
 
  }

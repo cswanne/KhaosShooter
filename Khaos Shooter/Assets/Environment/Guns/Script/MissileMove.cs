@@ -8,15 +8,15 @@ public class MissileMove : MonoBehaviour
 
     public float startSpeed;
     public float missileSpeed;
-    Rigidbody2D body;
-    Animator anim;
-
-    private GameObject player;
-    private GameObject target;
+    public int damage = 0;
     public GameObject explosion;
     public int hitPoints = 2;
     public int fuel = 10;
 
+    private Rigidbody2D body;
+    private Animator anim;
+    private GameObject player;
+    private GameObject target;
     private bool onMyWay;
     private float nextActionTime;
     private CommonProc commonProc;
