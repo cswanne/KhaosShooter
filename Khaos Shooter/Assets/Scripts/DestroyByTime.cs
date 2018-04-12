@@ -8,11 +8,7 @@ public class DestroyByTime : MonoBehaviour { //not used?
 
 	void FixedUpdate()
     {
-        Destroy(this.gameObject, 2);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Destroy(this.gameObject);
-    }
+
 }

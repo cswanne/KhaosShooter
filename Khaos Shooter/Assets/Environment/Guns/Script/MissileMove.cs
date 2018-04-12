@@ -9,6 +9,7 @@ public class MissileMove : MonoBehaviour
     public float startSpeed;
     public float missileSpeed;
     Rigidbody2D body;
+    Animator anim;
 
     public float speed = 5;
     public float rotatingSpeed = 1;
@@ -27,6 +28,7 @@ public class MissileMove : MonoBehaviour
         if (target == null)
             target = player;
         if (target == null) Destroy(gameObject);
+        anim = this.gameObject.GetComponent<Animator>();
         body = this.gameObject.GetComponent<Rigidbody2D>();
         body.velocity = transform.right * startSpeed;
 
@@ -51,7 +53,6 @@ public class MissileMove : MonoBehaviour
         }
         if (onMyWay && target != null) {
             Vector2 pointToTarget = (Vector2)transform.position - (Vector2)target.transform.position;
-            if (target == player) pointToTarget.y += 1;
             pointToTarget.Normalize();
             float value = Vector3.Cross(pointToTarget, transform.right).z;
             body.angularVelocity = rotatingSpeed * value;
@@ -65,6 +66,7 @@ public class MissileMove : MonoBehaviour
                 body.angularVelocity = transform.right.x * 30f;
                 body.gravityScale = 0.5f;
                 Destroy(gameObject, 4);
+                anim.SetTrigger("StopTrigger");
             }
         }
 

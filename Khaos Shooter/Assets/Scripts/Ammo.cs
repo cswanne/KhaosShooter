@@ -16,11 +16,9 @@ public class Ammo : MonoBehaviour {
         if (collision.collider.transform.tag == "Enemy") {
             Instantiate(explosion, transform.position, transform.rotation);
             Destroy(gameObject);
-            Assistant.canisterDestroyTime = Time.time;
         } else if (collision.collider.transform.tag == "Player") {
             Assistant.updateAmmo(10);
             Destroy(gameObject);
-            Assistant.canisterDestroyTime = Time.time;
         }
     }
 }

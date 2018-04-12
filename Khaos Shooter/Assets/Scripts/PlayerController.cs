@@ -10,18 +10,19 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour {
 
-    private float noFuel = 0;
-    private float x = 0f, y = 0f;
-
-    public float kbMoveSpeed = 300.0f;
     public GameObject shot;
     public GameObject explosion;
     public GameObject shield;
     public GameObject chaff;
     public Transform shotSpawn;
-    public float fireRate = 0.25f;
     public Boundary boundary;
+    [HideInInspector]
+    public bool shieldUp = false;
 
+    private float noFuel = 0;
+    private float x = 0f, y = 0f;
+    private float kbMoveSpeed = 7.0f;
+    private float fireRate = 0.25f;
     private float nextFire = 0.5f;
     private float nextKey = 0f;
     private GameController gameController;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour {
     private bool pressingKey = false;
     private int hitPoints = 100;
     private bool giftOnBoard = false;
+    private GameObject shieldInstance;
 
 
     Rigidbody2D body;
@@ -120,7 +122,9 @@ public class PlayerController : MonoBehaviour {
             pressingKey = true;
             StartCoroutine(CPressed());
         }
-        //redAlertShieldsUp
+        if (Input.GetKey(KeyCode.S)) {
+            RedAlertShieldsUp();
+        };
         Quaternion rot = Quaternion.Euler(0, yRotation, 0);
         if (this.transform.rotation != rot)
             this.transform.rotation = rot;
@@ -128,6 +132,23 @@ public class PlayerController : MonoBehaviour {
         if (pressingKey) StartCoroutine(KeyPressed());
 
     }
+
+    private void RedAlertShieldsUp()
+    {
+        if (shieldUp) return;
+        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, 86.33f));
+        shieldInstance = Instantiate(shield, transform.position, rot, transform);
+        shieldInstance.transform.parent = transform;
+        shieldUp = true;
+        StartCoroutine(ShieldDown());
+    }
+
+    IEnumerator ShieldDown()
+    {
+        yield return new WaitForSeconds(1.2f);
+        shieldUp = false;
+        Destroy(shieldInstance);
+    } 
 
     IEnumerator KeyPressed()
     {
@@ -137,7 +158,7 @@ public class PlayerController : MonoBehaviour {
 
     IEnumerator CPressed()
     {
-        Debug.Log("c");
+        //Debug.Log("c");
 
         yield return new WaitForSeconds(0.1f);
 
@@ -160,7 +181,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (collision.collider.transform.tag == "Enemy") {
             AsteroidCollide script = collision.gameObject.GetComponent<AsteroidCollide>();
-            hitPoints -= script.damage;
+            hitPoints -= script.damage / (shieldUp ? 2 : 1);
             Destroy(collision.gameObject);
             if (hitPoints <= 0) {
                 Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
@@ -168,9 +189,6 @@ public class PlayerController : MonoBehaviour {
                 //gameController.GameOver();
             }
         } else if (collision.collider.transform.tag == "Boulder") {
-            Quaternion rot = Quaternion.Euler(new Vector3(0, 0, 86.33f));
-            GameObject clone = Instantiate(shield, transform.position, rot, transform);
-            clone.transform.parent = transform;
         }
     }
 

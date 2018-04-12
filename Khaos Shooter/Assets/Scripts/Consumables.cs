@@ -45,9 +45,6 @@ public class Consumables : MonoBehaviour
     void Update()
     {
         if (Assistant.gameOver) return;
-        /*if (Assistant.canisterDestroyTime == 0 || Time.time > Assistant.canisterDestroyTime + nextCanisterSeconds) {
-            NewCanister();
-        }*/
         fuelSlider.value = Mathf.Clamp01(Assistant.currentFuel / 1000f);
         ammoSlider.value = Mathf.Clamp01(Assistant.currentAmmo / 50f);
         fuelSliderText.text = string.Format("{0:0}%", fuelSlider.value * 100f);
