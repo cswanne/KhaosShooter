@@ -20,12 +20,14 @@ public class MissileMove : MonoBehaviour
     private bool onMyWay;
     private float nextActionTime;
     private CommonProc commonProc;
+    private Globals globals;
 
 
     void Start()
     {
         GameObject lm = GameObject.Find("LevelManager");
         commonProc = lm.GetComponent<CommonProc>();
+        globals = lm.GetComponent<Globals>();
 
         player = GameObject.FindGameObjectWithTag("Player");
         if (target == null)
@@ -55,7 +57,7 @@ public class MissileMove : MonoBehaviour
             target = player;
         }
         if (onMyWay && target != null) {
-            commonProc.trackToObject(body, target, 7f);
+            commonProc.trackToObject(body, target, 7f, false);
         }
         if (Time.time > nextActionTime) {
             nextActionTime += 1;
@@ -80,10 +82,10 @@ public class MissileMove : MonoBehaviour
             }
         }
 
-        if (commonProc.cylinder != null && (target == player || target == null)) {
-            Cylinder script = commonProc.cylinder.GetComponent<Cylinder>();
+        if (globals.cylinder != null && (target == player || target == null)) {
+            Cylinder script = globals.cylinder.GetComponent<Cylinder>();
             if (script.attached) {
-                target = commonProc.cylinder;
+                target = globals.cylinder;
             }
         }
     }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Cylinder : MonoBehaviour {
 
     private CommonProc commonProc;
+    private Globals globals;
     private Rigidbody2D body;
     private GameObject asteroid = null;
     private bool hadTarget = false;
@@ -14,8 +15,9 @@ public class Cylinder : MonoBehaviour {
     void Start () {
         GameObject lm = GameObject.Find("LevelManager");
         commonProc = lm.GetComponent<CommonProc>();
+        globals = lm.GetComponent<Globals>();
         body = this.gameObject.GetComponent<Rigidbody2D>();
-        commonProc.cylinder = this.gameObject;
+        globals.cylinder = this.gameObject;
     }
 
     void Update () {
@@ -24,7 +26,7 @@ public class Cylinder : MonoBehaviour {
             hadTarget = true;
         }
         if (asteroid != null && !attached) {
-            attached = commonProc.trackToObject(body, asteroid, 10f);
+            attached = commonProc.trackToObject(body, asteroid, 10f, true);
         } else if (asteroid != null && attached) {
             Rigidbody2D aBody = asteroid.GetComponent<Rigidbody2D>();
             body.angularVelocity = aBody.angularVelocity;
@@ -37,6 +39,6 @@ public class Cylinder : MonoBehaviour {
 
     private void OnDestroy()
     {
-        commonProc.cylinder = null;
+        globals.cylinder = null;
     }
 }

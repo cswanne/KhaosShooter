@@ -4,19 +4,28 @@ using UnityEngine;
 
 public class CommonProc : MonoBehaviour {
 
-    [HideInInspector]
-    public GameObject cylinder = null;
+    private GameObject mainText;
+    private MonoBehaviour textScript;
 
-    public bool trackToObject(Rigidbody2D body, GameObject target, float speed)
+    private void Start()
+    {
+        GameObject mainText = GameObject.Find("Canvas/Panel/Text");
+        textScript = mainText.GetComponent<MonoBehaviour>();
+    }
+
+    public bool trackToObject(Rigidbody2D body, GameObject target, float speed, bool greenNotRed)
     {
         if (body == null || target == null) return false;
         float rotatingSpeed = 400;
+        Vector3 vector = Vector3.zero;
+        vector = body.transform.right;
+        if (greenNotRed) vector = body.transform.up;
 
         Vector2 pointToTarget = (Vector2)body.transform.position - (Vector2)target.transform.position;
         pointToTarget.Normalize();
-        float value = Vector3.Cross(pointToTarget, body.transform.right).z;
+        float value = Vector3.Cross(pointToTarget, vector).z;
         body.angularVelocity = rotatingSpeed * value;
-        body.velocity = body.transform.right * speed;
+        body.velocity = vector * speed;
 
         return (Vector2.Distance(body.transform.position, target.transform.position) < 0.3);
     }
@@ -35,6 +44,12 @@ public class CommonProc : MonoBehaviour {
             }
         }
         return closest;
+    }
+
+    public void updateText(string text)
+    {
+        if (mainText == null) return;
+
     }
 
 }
