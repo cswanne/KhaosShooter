@@ -14,11 +14,13 @@ public class PlayerController : MonoBehaviour {
     public GameObject explosion;
     public GameObject shield;
     public GameObject chaff;
+    public GameObject cylinder;
     public Transform shotSpawn;
     public Boundary boundary;
     [HideInInspector]
     public bool shieldUp = false;
 
+    private CommonProc commonProc;
     private float noFuel = 0;
     private float x = 0f, y = 0f;
     private float kbMoveSpeed = 7.0f;
@@ -44,6 +46,9 @@ public class PlayerController : MonoBehaviour {
 
     void Start ()
     {
+        GameObject lm = GameObject.Find("LevelManager");
+        commonProc = lm.GetComponent<CommonProc>();
+
         //Find this player's rigidbody component
         body = this.gameObject.GetComponent<Rigidbody2D>();
         //fireAudio1 = this.gameObject.GetComponent<AudioSource>();
@@ -77,6 +82,8 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate ()
     {
         body.AddForce(new Vector2(x, y), ForceMode2D.Impulse);
+        //body.AddForce(Vector2.Lerp(new Vector2(x, y), new Vector2(x, y), Time.fixedDeltaTime), ForceMode2D.Impulse);
+        
 
         if (this.transform.position.y > 8) {
             transform.position = new Vector3(transform.position.x, 7.8f, transform.position.z);
@@ -125,6 +132,12 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey(KeyCode.S)) {
             RedAlertShieldsUp();
         };
+        if (Input.GetKey(KeyCode.D)) {
+            if (commonProc.cylinder == null) { 
+                Instantiate(cylinder, transform.position, transform.rotation);
+            }
+        };
+
         Quaternion rot = Quaternion.Euler(0, yRotation, 0);
         if (this.transform.rotation != rot)
             this.transform.rotation = rot;
@@ -184,7 +197,8 @@ public class PlayerController : MonoBehaviour {
             hitPoints -= script.damage / (shieldUp ? 2 : 1);
             Destroy(collision.gameObject);
             if (hitPoints <= 0) {
-                Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
+                GameObject ex = Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
+                Destroy(ex, 1);
                 Destroy(gameObject);
                 //gameController.GameOver();
             }
@@ -219,3 +233,4 @@ public class PlayerController : MonoBehaviour {
         }
     }
 }
+

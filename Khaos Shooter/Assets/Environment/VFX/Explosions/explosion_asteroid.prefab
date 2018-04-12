@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 114816785643800196}
   m_Layer: 0
   m_Name: explosion_asteroid
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

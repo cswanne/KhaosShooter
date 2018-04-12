@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 61215083471989372}
   m_Layer: 0
   m_Name: Missile
-  m_TagString: Untagged
+  m_TagString: Missile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,8 +119,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startSpeed: 1
   missileSpeed: 7
-  speed: 5
-  rotatingSpeed: 400
   explosion: {fileID: 100004, guid: 2857e183f4cd3df4e9096e5b578bd32f, type: 2}
   hitPoints: 2
   fuel: 10

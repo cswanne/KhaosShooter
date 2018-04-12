@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : MonoBehaviour //not used
 {
 
     public static LevelManager Instance { set; get; }
@@ -13,7 +13,6 @@ public class LevelManager : MonoBehaviour
     public float transitionWait = 5.0f;
     public bool transition = false;
     public int killsPerLevel = 50;
-
 
     private void Awake()
     {

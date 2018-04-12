@@ -22,7 +22,8 @@ public class AsteroidCollide : MonoBehaviour {
     {
         float scale = 0.3f;
         int force = 3;
-        Instantiate(explosion, transform.position, transform.rotation);
+        GameObject ex = Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(ex, 1);
         Destroy(asteriod);
         for (var i = 1; i < 7; i++) {
             GameObject clone = Instantiate(asteriod, transform.position, transform.rotation, transform.parent);
@@ -50,15 +51,21 @@ public class AsteroidCollide : MonoBehaviour {
 
     private void OnDestroy()
     {
-        Instantiate(explosion, transform.position, transform.rotation);
+        GameObject clone = Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(clone, 1);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         string contactTag = collision.gameObject.tag;
-        if (contactTag == "Bolt" && this.tag == "Enemy") { 
-            hitPoints--;
-            Instantiate(explosion, transform.position, transform.rotation);
+        if ((contactTag == "Bolt" || contactTag == "Missile") && this.tag == "Enemy") { 
+            if (contactTag == "Missile") {
+                hitPoints = 0;
+            } else {
+                hitPoints--;
+            }
+            GameObject ex = Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(ex, 1);
             if (hitPoints <= 0) { 
                 Destroy(collision.gameObject); //bolt
                 Fragment(this.gameObject);

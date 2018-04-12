@@ -11,8 +11,6 @@ public class MissileMove : MonoBehaviour
     Rigidbody2D body;
     Animator anim;
 
-    public float speed = 5;
-    public float rotatingSpeed = 1;
     private GameObject player;
     private GameObject target;
     public GameObject explosion;
@@ -21,9 +19,14 @@ public class MissileMove : MonoBehaviour
 
     private bool onMyWay;
     private float nextActionTime;
+    private CommonProc commonProc;
+
 
     void Start()
     {
+        GameObject lm = GameObject.Find("LevelManager");
+        commonProc = lm.GetComponent<CommonProc>();
+
         player = GameObject.FindGameObjectWithTag("Player");
         if (target == null)
             target = player;
@@ -52,21 +55,18 @@ public class MissileMove : MonoBehaviour
             target = player;
         }
         if (onMyWay && target != null) {
-            Vector2 pointToTarget = (Vector2)transform.position - (Vector2)target.transform.position;
-            pointToTarget.Normalize();
-            float value = Vector3.Cross(pointToTarget, transform.right).z;
-            body.angularVelocity = rotatingSpeed * value;
-            body.velocity = transform.right * speed;
+            commonProc.trackToObject(body, target, 7f);
         }
         if (Time.time > nextActionTime) {
             nextActionTime += 1;
             fuel -= 1;
+            //Missile, no more fuel
             if (fuel < 0) {
                 target = null;
                 body.angularVelocity = transform.right.x * 30f;
                 body.gravityScale = 0.5f;
                 Destroy(gameObject, 4);
-                anim.SetTrigger("StopTrigger");
+                //anim.SetTrigger("StopTrigger"); not working
             }
         }
 
@@ -79,27 +79,37 @@ public class MissileMove : MonoBehaviour
                 }
             }
         }
+
+        if (commonProc.cylinder != null && (target == player || target == null)) {
+            Cylinder script = commonProc.cylinder.GetComponent<Cylinder>();
+            if (script.attached) {
+                target = commonProc.cylinder;
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "Bolt") {
             hitPoints--;
-            Instantiate(explosion, transform.position, transform.rotation);
+            GameObject clone = Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(clone, 1);
             explosion.transform.localScale = explosion.transform.localScale * 0.1f;
         } else {
             hitPoints = 0;
         }
         if (hitPoints <= 0) {
-            Instantiate(explosion, transform.position, transform.rotation);
+            GameObject clone = Instantiate(explosion, transform.position, transform.rotation);
             Destroy(gameObject);
+            Destroy(clone, 1);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.tag == "Chaff") {
-            Instantiate(explosion, transform.position, transform.rotation);
+            GameObject clone = Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(clone, 1);
             Destroy(gameObject);
             Destroy(collision.gameObject);
         }
