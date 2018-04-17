@@ -24,19 +24,25 @@ public class PlayerController : MonoBehaviour {
     private Globals globals;
     private float noFuel = 0;
     private float x = 0f, y = 0f;
-    private float kbMoveSpeed = 7.0f;
+    private float moveSpeedX = 30f;
+    private float moveSpeedY = 20f;
     private float fireRate = 0.25f;
     private float nextFire = 0.5f;
     private float nextKey = 0f;
     private float yRotation = 0;
-    private bool applyingForce = false;
+    private float forceRate = 0.1f;
+    private float nextForce = 0.0f;
     private bool pressingKey = false;
     private int hitPoints = 100;
     private bool giftOnBoard = false;
 
     private float shieldDuration = 1.2f;
     private float shieldFadeTime;
+    private int damageInflicting = 0;
+    private bool damageZoomOut = true;
+    Vector2 m_CurrentVelocity;
     SpriteRenderer shield1;
+    TextMesh damageText;
 
     Rigidbody2D body;
     //AudioSource fireAudio1;
@@ -56,6 +62,8 @@ public class PlayerController : MonoBehaviour {
         nextKey = Time.time;
         shield1 = transform.Find("Shield1").GetComponent<SpriteRenderer>();
         shield1.color = new Color(255f, 255f, 255f, 0);
+        damageText = transform.Find("DamageIndicator").GetComponent<TextMesh>();
+        nextForce = Time.time + forceRate;
     }
 
     private void Update()
@@ -86,13 +94,18 @@ public class PlayerController : MonoBehaviour {
             if (fade == 0)
                 shield1.enabled = false;
         }
+        //if (Time.time > nextForce) {
+        //    body.AddForce(new Vector2(x, y), ForceMode2D.Force);
+        //    nextForce = Time.time + forceRate;
+        //}
+
+        Vector2 newPos = Vector2.SmoothDamp(transform.position, (Vector2)transform.position + new Vector2(x, y), ref m_CurrentVelocity, 1, Mathf.Infinity, Time.deltaTime);
+        transform.position = newPos;
+
     }
 
     void FixedUpdate ()
     {
-        body.AddForce(new Vector2(x, y), ForceMode2D.Impulse);
-        //body.AddForce(Vector2.Lerp(new Vector2(x, y), new Vector2(x, y), Time.fixedDeltaTime), ForceMode2D.Impulse);
-        
 
         if (this.transform.position.y > 8) {
             transform.position = new Vector3(transform.position.x, 7.8f, transform.position.z);
@@ -100,35 +113,36 @@ public class PlayerController : MonoBehaviour {
             transform.position = new Vector3(transform.position.x, -4.8f, transform.position.z);
         };
 
+
     }
 
 
     public void keyboardControls(bool boost, float noFuel)
     {
-        if (applyingForce) return;
         if (pressingKey) return;
 
 
-        float speed = (boost) ? kbMoveSpeed * 2 * noFuel : kbMoveSpeed * noFuel;
+        float speedX = (boost) ? moveSpeedX * 2 * noFuel : moveSpeedX * noFuel;
+        float speedY = (boost) ? moveSpeedY * 2 * noFuel : moveSpeedY * noFuel;
         x = 0f;
         y = 0f;
         if (Input.GetKey(KeyCode.RightArrow)) {
             pressingKey = true;
-            x = speed;
+            x = speedX;
             yRotation = 0;
         };
         if (Input.GetKey(KeyCode.LeftArrow)) {
             pressingKey = true;
-            x = -speed;
+            x = -speedX;
             yRotation = 180;
         };
         if (Input.GetKey(KeyCode.UpArrow)) {
             pressingKey = true;
-            y = speed;
+            y = speedY;
         };
         if (Input.GetKey(KeyCode.DownArrow)) {
             pressingKey = true;
-            y = -speed;
+            y = -speedY;
         };
         if (x + y != 0) {
             pressingKey = true;
@@ -150,7 +164,7 @@ public class PlayerController : MonoBehaviour {
         Quaternion rot = Quaternion.Euler(0, yRotation, 0);
         if (this.transform.rotation != rot)
             this.transform.rotation = rot;
-
+        damageText.transform.rotation = Quaternion.identity;
         if (pressingKey) StartCoroutine(KeyPressed());
 
     }
@@ -218,13 +232,39 @@ public class PlayerController : MonoBehaviour {
 
     private void hurtMe(int damage, Collision2D collision)
     {
-        hitPoints -= damage / (shieldUp ? 2 : 1);
+        int d = damage / (shieldUp ? 2 : 1);
+        damageInflicting += d;
+        damageText.text = damageInflicting.ToString();
+        StartCoroutine(UpdateDamageTextSize());
+        hitPoints -= d;
         commonProc.updateText(hitPoints.ToString()); //not working
         Destroy(collision.gameObject);
         if (hitPoints <= 0) {
             GameObject ex = Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
             Destroy(ex, 1);
             Destroy(gameObject);
+        }
+    }
+
+    IEnumerator UpdateDamageTextSize()
+    {
+        yield return null;
+        if (damageZoomOut) {
+            if (damageText.fontSize < 200) {
+                damageText.fontSize += 8;
+                StartCoroutine(UpdateDamageTextSize());
+            } else {
+                damageZoomOut = false;
+                StartCoroutine(UpdateDamageTextSize());
+            }
+        } else if (damageText.fontSize > 56) {
+            damageText.fontSize -= 12;
+            StartCoroutine(UpdateDamageTextSize());
+        } else { 
+            damageText.text = "";
+            damageInflicting = 0;
+            damageZoomOut = true;
+            damageText.fontSize = 36;
         }
     }
 
