@@ -72,7 +72,7 @@ public class MissileMove : MonoBehaviour
             }
         }
 
-        if (Assistant.lookForChaff) {
+        if (globals.lookForChaff) {
             if (target == player || target == null) {
                 GameObject[] chaff = GameObject.FindGameObjectsWithTag("Chaff");
                 foreach (GameObject go in chaff) {

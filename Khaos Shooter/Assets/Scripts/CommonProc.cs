@@ -23,7 +23,7 @@ public class CommonProc : MonoBehaviour {
         if (greenNotRed) vector = body.transform.up;
 
         Vector2 pointToTarget = (Vector2)body.transform.position - (Vector2)target.transform.position;
-        pointToTarget.y += 0.1f; //used mainly for the ship, so that missiles head for the gun, making it easier to shoot them
+        //pointToTarget.y += 0.1f; //used mainly for the ship, so that missiles head for the gun, making it easier to shoot them
         pointToTarget.Normalize();
         float value = Vector3.Cross(pointToTarget, vector).z;
         body.angularVelocity = rotatingSpeed * value;
