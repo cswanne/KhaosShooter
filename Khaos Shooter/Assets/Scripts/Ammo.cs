@@ -5,13 +5,6 @@ using UnityEngine;
 public class Ammo : MonoBehaviour {
 
     public Transform explosion;
-    private Globals globals;
-
-    private void Start()
-    {
-        GameObject lm = GameObject.Find("LevelManager");
-        globals = lm.GetComponent<Globals>();
-    }
 
     void Update()
     {
@@ -25,7 +18,7 @@ public class Ammo : MonoBehaviour {
             Destroy(clone.gameObject, 1);
             Destroy(gameObject);
         } else if (collision.collider.transform.tag == "Player") {
-            globals.updateAmmo(10);
+            Assistant.updateAmmo(10);
             Destroy(gameObject);
         }
     }

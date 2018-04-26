@@ -11,16 +11,9 @@ public class Consumables : MonoBehaviour
 
     private Text fuelSliderText;
     private Text ammoSliderText;
-    private CommonProc commonProc;
-    private Globals globals;
-
 
     private void Start()
     {
-        GameObject lm = GameObject.Find("LevelManager");
-        commonProc = lm.GetComponent<CommonProc>();
-        globals = lm.GetComponent<Globals>();
-
         fuelSliderText = fuelSlider.GetComponentInChildren<Text>();
         ammoSliderText = ammoSlider.GetComponentInChildren<Text>();
     }
@@ -51,8 +44,9 @@ public class Consumables : MonoBehaviour
 
     void Update()
     {
-        fuelSlider.value = Mathf.Clamp01(globals.currentFuel / 1000f);
-        ammoSlider.value = Mathf.Clamp01(globals.currentAmmo / 50f);
+        if (Assistant.gameOver) return;
+        fuelSlider.value = Mathf.Clamp01(Assistant.currentFuel / 1000f);
+        ammoSlider.value = Mathf.Clamp01(Assistant.currentAmmo / 50f);
         fuelSliderText.text = string.Format("{0:0}%", fuelSlider.value * 100f);
         ammoSliderText.text = string.Format("{0:0}%", ammoSlider.value * 100f);
     }

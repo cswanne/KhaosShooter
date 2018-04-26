@@ -68,16 +68,16 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
-        if ((Input.GetButton("AButton") || Input.GetKey(KeyCode.Space)) && globals.currentAmmo > 0 && Time.time > nextFire) {
+        if ((Input.GetButton("AButton") || Input.GetKey(KeyCode.Space)) && Assistant.currentAmmo > 0 && Time.time > nextFire) {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
-            globals.currentAmmo--;
+            Assistant.currentAmmo--;
             //fireAudio1.Play();
         };
 
         noFuel = 1f;
 
-        if (globals.currentFuel == 0) noFuel = 0.25f;
+        if (Assistant.currentFuel == 0) noFuel = 0.25f;
         if (Time.time > nextKey) {
             keyboardControls(Input.GetKey(KeyCode.Z), noFuel);
             nextKey += 0.05f;
@@ -99,14 +99,21 @@ public class PlayerController : MonoBehaviour {
         //    nextForce = Time.time + forceRate;
         //}
 
+        Vector2 newPos = Vector2.SmoothDamp(transform.position, (Vector2)transform.position + new Vector2(x, y), ref m_CurrentVelocity, 1, Mathf.Infinity, Time.deltaTime);
+        transform.position = newPos;
 
     }
 
     void FixedUpdate ()
     {
-        Vector2 newPos = Vector2.SmoothDamp(transform.position, (Vector2)transform.position + new Vector2(x, y), ref m_CurrentVelocity, 1, Mathf.Infinity, Time.deltaTime);
-        newPos.y = Mathf.Clamp(newPos.y, -4.7f, 8f);
-        transform.position = newPos;
+
+        if (this.transform.position.y > 8) {
+            transform.position = new Vector3(transform.position.x, 7.8f, transform.position.z);
+        } else if (this.transform.position.y < -5) {
+            transform.position = new Vector3(transform.position.x, -4.8f, transform.position.z);
+        };
+
+
     }
 
 
@@ -139,20 +146,18 @@ public class PlayerController : MonoBehaviour {
         };
         if (x + y != 0) {
             pressingKey = true;
-            globals.updateFuel((boost) ? -2 : -1);
+            Assistant.updateFuel((boost) ? -2 : -1);
         };
         if (Input.GetKey(KeyCode.C)) {
             pressingKey = true;
-            StartCoroutine(Chaff());
+            StartCoroutine(CPressed());
         }
         if (Input.GetKey(KeyCode.S)) {
-            redAlertShieldsUp();
+            RedAlertShieldsUp();
         };
         if (Input.GetKey(KeyCode.D)) {
-            if (globals.cylinder == null) {
-                Vector3 startPos = transform.position;
-                startPos.z = -4;
-                Instantiate(cylinder, startPos, Quaternion.Euler(0, 0, 90));
+            if (globals.cylinder == null) { 
+                Instantiate(cylinder, transform.position, Quaternion.Euler(0, 0, 90));
             }
         };
 
@@ -164,7 +169,7 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    private void redAlertShieldsUp()
+    private void RedAlertShieldsUp()
     {
         if (shieldUp) return;
         SpriteRenderer sr1 = transform.Find("Shield1").GetComponent<SpriteRenderer>();
@@ -191,14 +196,17 @@ public class PlayerController : MonoBehaviour {
         pressingKey = false;
     } 
 
-    IEnumerator Chaff()
+    IEnumerator CPressed()
     {
+        //Debug.Log("c");
+
         yield return new WaitForSeconds(0.1f);
+
         Vector3 pos = transform.position;
         pos.x -= transform.right.x * 3f;
         GameObject clone = Instantiate(chaff, pos, transform.rotation, null);
         Destroy(clone, 2);
-        globals.lookForChaff = true;
+        Assistant.lookForChaff = true;
         StartCoroutine(StopLooking());
         yield return new WaitForSeconds(0.5f);
     }
@@ -206,7 +214,7 @@ public class PlayerController : MonoBehaviour {
     IEnumerator StopLooking()
     {
         yield return new WaitForSeconds(2);
-        globals.lookForChaff = false;
+        Assistant.lookForChaff = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -229,7 +237,7 @@ public class PlayerController : MonoBehaviour {
         damageText.text = damageInflicting.ToString();
         StartCoroutine(UpdateDamageTextSize());
         hitPoints -= d;
-        commonProc.updateText(hitPoints.ToString());
+        commonProc.updateText(hitPoints.ToString()); //not working
         Destroy(collision.gameObject);
         if (hitPoints <= 0) {
             GameObject ex = Instantiate(explosion, collision.collider.transform.position, collision.collider.transform.rotation);
@@ -272,10 +280,10 @@ public class PlayerController : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.tag == "Ammo") {
-            globals.updateAmmo(1000);
+            Assistant.maxAmmo();
             Destroy(collision.gameObject);
         } else if (collision.transform.tag == "Fuel") {
-            globals.updateFuel(250);
+            Assistant.addFuel();
             Destroy(collision.gameObject);
         } else if (collision.transform.name == "Gift2D" && !giftOnBoard) {
             giftOnBoard = true;
