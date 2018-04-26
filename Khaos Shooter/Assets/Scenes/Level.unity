@@ -191,7 +191,11 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 505518}
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &11832029
+=======
+--- !u!1 &20648493
+>>>>>>> parent of 353dc61... Move stuff into globals
 =======
 --- !u!1 &20648493
 >>>>>>> parent of 353dc61... Move stuff into globals
@@ -202,21 +206,28 @@ GameObject:
   serializedVersion: 5
   m_Component:
 <<<<<<< HEAD
+<<<<<<< HEAD
   - component: {fileID: 11832030}
   - component: {fileID: 11832031}
   m_Layer: 0
   m_Name: MainBackground
 =======
+=======
+>>>>>>> parent of 353dc61... Move stuff into globals
   - component: {fileID: 20648494}
   - component: {fileID: 20648495}
   m_Layer: 0
   m_Name: Shield1
+<<<<<<< HEAD
+>>>>>>> parent of 353dc61... Move stuff into globals
+=======
 >>>>>>> parent of 353dc61... Move stuff into globals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 <<<<<<< HEAD
 --- !u!4 &11832030
 =======
@@ -271,10 +282,14 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &14447215
+=======
+--- !u!4 &20648494
+>>>>>>> parent of 353dc61... Move stuff into globals
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 14447214}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -6, z: 2}
@@ -285,6 +300,8 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &14447216
 =======
+=======
+>>>>>>> parent of 353dc61... Move stuff into globals
   m_GameObject: {fileID: 20648493}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -294,14 +311,22 @@ Transform:
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &20648495
+<<<<<<< HEAD
+>>>>>>> parent of 353dc61... Move stuff into globals
+=======
 >>>>>>> parent of 353dc61... Move stuff into globals
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_GameObject: {fileID: 14447214}
   m_Enabled: 1
+=======
+  m_GameObject: {fileID: 20648493}
+  m_Enabled: 0
+>>>>>>> parent of 353dc61... Move stuff into globals
 =======
   m_GameObject: {fileID: 20648493}
   m_Enabled: 0
@@ -334,6 +359,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_Sprite: {fileID: 21300000, guid: 666fe022d0358c246a77c6dfa61f6325, type: 3}
   m_Color: {r: 0.39655155, g: 0.375, b: 1, a: 1}
   m_FlipX: 0
@@ -341,12 +367,17 @@ SpriteRenderer:
   m_DrawMode: 0
   m_Size: {x: 20.48, y: 2.5}
 =======
+=======
+>>>>>>> parent of 353dc61... Move stuff into globals
   m_Sprite: {fileID: 21300000, guid: ffda9376c77c3794a80b9f577480e666, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2.8, y: 2.8}
+<<<<<<< HEAD
+>>>>>>> parent of 353dc61... Move stuff into globals
+=======
 >>>>>>> parent of 353dc61... Move stuff into globals
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -487,6 +518,7 @@ Transform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &208437216
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +530,8 @@ GameObject:
   m_Layer: 0
   m_Name: Right
 =======
+=======
+>>>>>>> parent of 353dc61... Move stuff into globals
 --- !u!1 &216343797
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,12 +543,16 @@ GameObject:
   - component: {fileID: 216343798}
   m_Layer: 0
   m_Name: ShotSpawnC
+<<<<<<< HEAD
+>>>>>>> parent of 353dc61... Move stuff into globals
+=======
 >>>>>>> parent of 353dc61... Move stuff into globals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 <<<<<<< HEAD
 --- !u!4 &208437217
 Transform:
@@ -531,6 +569,8 @@ Transform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 =======
+=======
+>>>>>>> parent of 353dc61... Move stuff into globals
 --- !u!4 &216343798
 Transform:
   m_ObjectHideFlags: 0
@@ -545,6 +585,9 @@ Transform:
   m_Father: {fileID: 383073343}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
+<<<<<<< HEAD
+>>>>>>> parent of 353dc61... Move stuff into globals
+=======
 >>>>>>> parent of 353dc61... Move stuff into globals
 --- !u!1001 &225326663
 Prefab:
@@ -984,11 +1027,14 @@ Prefab:
       value: Player
       objectReference: {fileID: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
     - target: {fileID: 114933838604387620, guid: be0f462343e65c14b81e5d15d0b41045,
         type: 2}
       propertyPath: boundary.yMin
       value: -7.1
 =======
+=======
+>>>>>>> parent of 353dc61... Move stuff into globals
     - target: {fileID: 4371484368176566, guid: be0f462343e65c14b81e5d15d0b41045, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
@@ -1050,6 +1096,9 @@ Prefab:
     - target: {fileID: 4371484368176566, guid: be0f462343e65c14b81e5d15d0b41045, type: 2}
       propertyPath: m_LocalScale.z
       value: 0.7749631
+<<<<<<< HEAD
+>>>>>>> parent of 353dc61... Move stuff into globals
+=======
 >>>>>>> parent of 353dc61... Move stuff into globals
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1811,7 +1860,11 @@ Prefab:
   m_IsPrefabParent: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &782132660
+=======
+--- !u!1 &815236162
+>>>>>>> parent of 353dc61... Move stuff into globals
 =======
 --- !u!1 &815236162
 >>>>>>> parent of 353dc61... Move stuff into globals
@@ -1822,14 +1875,20 @@ GameObject:
   serializedVersion: 5
   m_Component:
 <<<<<<< HEAD
+<<<<<<< HEAD
   - component: {fileID: 782132661}
   m_Layer: 0
   m_Name: Left
 =======
+=======
+>>>>>>> parent of 353dc61... Move stuff into globals
   - component: {fileID: 815236163}
   - component: {fileID: 815236164}
   m_Layer: 0
   m_Name: Shield2
+<<<<<<< HEAD
+>>>>>>> parent of 353dc61... Move stuff into globals
+=======
 >>>>>>> parent of 353dc61... Move stuff into globals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1837,7 +1896,11 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!4 &782132661
+=======
+--- !u!4 &815236163
+>>>>>>> parent of 353dc61... Move stuff into globals
 =======
 --- !u!4 &815236163
 >>>>>>> parent of 353dc61... Move stuff into globals
@@ -1845,6 +1908,7 @@ Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< HEAD
   m_GameObject: {fileID: 782132660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1856,6 +1920,8 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 =======
+=======
+>>>>>>> parent of 353dc61... Move stuff into globals
   m_GameObject: {fileID: 815236162}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.1, y: 0, z: 1}
@@ -1908,9 +1974,12 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+<<<<<<< HEAD
 >>>>>>> parent of 353dc61... Move stuff into globals
 =======
 >>>>>>> parent of 2fc5c9d... Artwork
+=======
+>>>>>>> parent of 353dc61... Move stuff into globals
 --- !u!224 &914808251 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224135958397597082, guid: a6561ef9ba66aa84b9d0762f52f2e67c,
@@ -2256,6 +2325,7 @@ Prefab:
   m_ParentPrefab: {fileID: 100100000, guid: bd4c8081a70a00d40bf1de0dc2870c7a, type: 2}
   m_IsPrefabParent: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &1045660173
 GameObject:
   m_ObjectHideFlags: 0
@@ -2449,6 +2519,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+=======
+>>>>>>> parent of 353dc61... Move stuff into globals
 =======
 >>>>>>> parent of 353dc61... Move stuff into globals
 --- !u!1001 &1060477404
@@ -2905,6 +2977,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &1218054647
 GameObject:
   m_ObjectHideFlags: 0
@@ -3026,6 +3099,8 @@ Transform:
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 =======
+=======
+>>>>>>> parent of 353dc61... Move stuff into globals
 --- !u!114 &1192413032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3039,6 +3114,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetX: 2
+<<<<<<< HEAD
+>>>>>>> parent of 353dc61... Move stuff into globals
+=======
 >>>>>>> parent of 353dc61... Move stuff into globals
 --- !u!1001 &1220376358
 Prefab:
